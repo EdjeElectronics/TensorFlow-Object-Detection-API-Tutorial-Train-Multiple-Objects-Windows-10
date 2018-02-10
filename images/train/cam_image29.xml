@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>cam_image29.jpg</filename>
+	<path>C:\tensorflow_cards\train\cam_image29.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>960</width>
+		<height>540</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>ten</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>339</xmin>
+			<ymin>89</ymin>
+			<xmax>581</xmax>
+			<ymax>376</ymax>
+		</bndbox>
+	</object>
+</annotation>
