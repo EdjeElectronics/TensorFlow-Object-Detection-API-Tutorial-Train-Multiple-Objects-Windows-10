@@ -283,14 +283,17 @@ Make the following changes to the faster_rcnn_inception_v2_pets.config file. Not
 
 - Line 9. Change num_classes to the number of different objects you want the classifier to detect. For the above basketball, shirt, and shoe detector, it would be num_classes : 3 .
 - Line 110. Change fine_tune_checkpoint to:
-fine_tune_checkpoint : “C://tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
+  - fine_tune_checkpoint : “C://tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
+
 - Lines 126 and 128. In the train_input_reader section, change input_path and label_map_path to:
-input_path : "C://tensorflow1/models/research/object_detection/train.record"
-label_map_path: "C://tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
+  - input_path : "C://tensorflow1/models/research/object_detection/train.record"
+  - label_map_path: "C://tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
+
 - Line 132. Change num_examples to the number of images you have in the \images\test directory.
+
 - Lines 140 and 142. In the eval_input_reader section, change input_path and label_map_path to:
-input_path : "C://tensorflow1/models/research/object_detection/test.record"
-label_map_path: "C://tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
+  - input_path : "C://tensorflow1/models/research/object_detection/test.record"
+  - label_map_path: "C://tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
 
 Save the file after the changes have been made. That’s it! The training job is all configured and ready to go!
 
