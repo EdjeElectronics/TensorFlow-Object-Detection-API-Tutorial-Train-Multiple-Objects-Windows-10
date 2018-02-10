@@ -113,6 +113,7 @@ The PATH variable must be configured to add the \models, \models\research, and \
 (tensorflow1) C:\> set PYTHONPATH=C:\tensorflow1\models;C:\tensorflow1\models\research;C:\tensorflow1\models\research\slim
 (tensorflow1) C:\> set PATH=%PATH%;%PYTHONPATH%
 ```
+**Note: Every time the "tensorflow1" virtual environment is exited, the PATH and PYTHONPATH variables are reset and need to be set up again.**
 
 #### 2f. Compile Protobufs and run setup.py
 Next, compile the Protobuf files, which are used by TensorFlow to configure model and training parameters. Unfortunately, the short protoc compilation command posted on TensorFlow’s Object Detection API [installation page](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md) does not work on Windows. Every  .proto file in the \object_detection\protos directory must be called out individually by the command.
@@ -278,11 +279,11 @@ Finally, the object detection training pipeline must be configured. It defines w
 
 Navigate to C:\tensorflow1\models\research\object_detection\samples\configs and copy the faster_rcnn_inception_v2_pets.config file into the \object_detection\training directory. Then, open the file with a text editor. There are several changes to make to the .config file, mainly changing the number of classes and examples, and adding the file paths to the training data.
 
-Make the following changes to the faster_rcnn_inception_v2_pets.config file:
+Make the following changes to the faster_rcnn_inception_v2_pets.config file. Note: The path must be entered with two forward slashes after C: and single forward slashes elsewhere, or TensorFlow will give a file path error when trying to train the model!
+
 - Line 9. Change num_classes to the number of different objects you want the classifier to detect. For the above basketball, shirt, and shoe detector, it would be num_classes : 3 .
 - Line 110. Change fine_tune_checkpoint to:
 fine_tune_checkpoint : “C://tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
-Note: The path must be entered with two forward slashes after C: and single forward slashes elsewhere, or TensorFlow will give a file path error when trying to train the model.
 - Lines 126 and 128. In the train_input_reader section, change input_path and label_map_path to:
 input_path : "C://tensorflow1/models/research/object_detection/train.record"
 label_map_path: "C://tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
