@@ -321,7 +321,7 @@ You can view the progress of the training job by using TensorBoard. To do this, 
 This will create a webpage on your local machine at http://<YourPCName>:6006, which can be viewed through a web browser. The TensorBoard page provides information and graphs that show how the training is progressing. One important graph is the Loss graph, which shows the overall loss of the classifier over time.
 
 <p align="center">
-  <img src="doc/loss_graph.jpg">
+  <img src="doc/loss_graph.JPG">
 </p>
 
 The training routine periodically saves checkpoints about every five minutes. You can terminate the training by pressing Ctrl+C while in the command prompt window. I typically wait until just after a checkpoint has been saved to terminate the training. You can terminate training and start it later, and it will restart from the last saved checkpoint. The checkpoint at the highest number of steps will be used to generate the frozen inference graph.
@@ -345,7 +345,7 @@ To run any of the scripts, type “idle” in the Anaconda Command Prompt (with 
 If everything is working properly, the object detector will initialize for about 10 seconds and then display a window showing any objects it’s detected in the image!
 
 <p align="center">
-  <img src="doc/detector2.JPG">
+  <img src="doc/detector2.jpg">
 </p>
 
 If you encounter errors, please check out the Appendix: it has a list of errors that I ran in to while setting up my object detection classifier. You can also trying Googling the error, there is usually useful information on Stack Exchange or in TensorFlow’s Issues on GitHub.
