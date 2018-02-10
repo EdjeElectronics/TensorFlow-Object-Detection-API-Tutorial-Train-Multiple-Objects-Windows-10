@@ -17,6 +17,10 @@ This readme describes every step required to get going with your own object dete
 
 The repository provides all the files needed to train a "Pinochle Deck" playing card detector that can accurately detect nines, tens, jacks, queens, kings, and aces. The tutorial describes how to replace these files with your own files to train a detection classifier for whatever your heart desires. It also has Python scripts to test your classifier out on an image, video, or webcam feed.
 
+<p align="center">
+  <img src="doc/detector1.jpg">
+</p>
+
 ## Introduction
 The purpose of this tutorial is to explain how to train your own convolutional neural network object detection classifier for multiple objects, starting from scratch. At the end of this tutorial, you will have a program that can identify and draw boxes around specific objects in pictures, videos, or in a webcam feed.
 
@@ -44,17 +48,17 @@ This portion of the tutorial goes over the full set up required. It is fairly me
 
 #### 2a. Download TensorFlow Object Detection API repository from GitHub
 Create a folder directly in C: and name it “tensorflow1”. This working directory will contain the full TensorFlow object detection framework, as well as your training images, training data, trained classifier, configuration files, and everything else needed for the object detection classifier.
-* Picture of directory here?
 
 Download the full TensorFlow object detection repository located at https://github.com/tensorflow/models by clicking the “Clone or Download” button and downloading the zip file. Open the downloaded zip file and extract the “models-master” folder directly into C:\tensorflow1 you just created. Rename “models-master” to just “models”.
-* Picture of directory here?
 
 (Note, this tutorial was done using this [GitHub commit](https://github.com/tensorflow/models/tree/079d67d9a0b3407e8d074a200780f3835413ef99). If portions of this tutorial do not work, it may be necessary to download and use this exact commit rather than the most up-to-date version.)
 
 #### 2b. Download the Faster-RCNN-Inception-V2-COCO model from TensorFlow's model zoo
 TensorFlow provides several object detection models (pre-trained classifiers with specific neural network architectures) in its [model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). Some models (such as the SSD-MobileNet model) have an architecture that allows for faster detection but with less accuracy, while some models (such as the Faster-RCNN model) give slower detection but with more accuracy. I initially started with the SSD-MobileNet-V1 model, but it didn’t do a very good job identifying the cards in my images. I re-trained my detector on the Faster-RCNN-Inception-V2 model, and the detection worked considerably better without a noticeable difference in speed.
 
-* Picture of RCNN performance vs SSD performance
+<p align="center">
+  <img src="doc/rcnn_vs_ssd.jpg">
+</p>
 
 You can choose which model to train your objection detection classifier on. If you are planning on using the object detector on a device with low computational power (such as a smart phone or Raspberry Pi), use the SDD-MobileNet model. If you will be running your detector on a decently powered laptop or desktop PC, use one of the RCNN models. 
 
@@ -65,7 +69,9 @@ Download the full repository located on this page (scroll to the top and click C
 
 At this point, here is what your \object_detection folder should look like:
 
-* Picture of directory
+<p align="center">
+  <img src="doc/object_detection_directory.jpg">
+</p>
 
 This repository contains the images, annotation data, .csv files, and TFRecords needed to train a "Pinochle Deck" playing card detector. You can use these images and data to practice making your own Pinochle Card Detector. It also contains Python scripts that are used to generate the training data, as well as test to test out the object detection classifier on images, videos, or a webcam feed. You can ignore the \doc folder and its files, they are just there to hold the images used for this readme.
 
@@ -314,7 +320,9 @@ You can view the progress of the training job by using TensorBoard. To do this, 
 ```
 This will create a webpage on your local machine at http://<YourPCName>:6006, which can be viewed through a web browser. The TensorBoard page provides information and graphs that show how the training is progressing. One important graph is the Loss graph, which shows the overall loss of the classifier over time.
 
-* Picture of loss graph
+<p align="center">
+  <img src="doc/loss_graph.jpg">
+</p>
 
 The training routine periodically saves checkpoints about every five minutes. You can terminate the training by pressing Ctrl+C while in the command prompt window. I typically wait until just after a checkpoint has been saved to terminate the training. You can terminate training and start it later, and it will restart from the last saved checkpoint. The checkpoint at the highest number of steps will be used to generate the frozen inference graph.
 
@@ -336,7 +344,9 @@ To run any of the scripts, type “idle” in the Anaconda Command Prompt (with 
 
 If everything is working properly, the object detector will initialize for about 10 seconds and then display a window showing any objects it’s detected in the image!
 
-* Picture of detected cards
+<p align="center">
+  <img src="doc/detector2.jpg">
+</p>
 
 If you encounter errors, please check out the Appendix: it has a list of errors that I ran in to while setting up my object detection classifier. You can also trying Googling the error, there is usually useful information on Stack Exchange or in TensorFlow’s Issues on GitHub.
 
