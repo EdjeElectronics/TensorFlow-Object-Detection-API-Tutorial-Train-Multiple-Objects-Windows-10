@@ -218,3 +218,121 @@ python generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=image
 These generate a train.record and a test.record file in \object_detection. These will be used to train the new object detection classifier.
 
 ### 5. Create Label Map and Configure Training
+The last thing to do before training is to create a label map and edit the training configuration file.
+
+#### 5a. Label map
+The label map tells the trainer what each object is by defining a mapping of class names to class ID numbers. Use a text editor to create a new file and save it as labelmap.pbtxt in the C:\tensorflow1\models\research\object_detection\training folder. (Make sure the file type is .pbtxt, not .txt !) In the text editor, copy or type in the label map in the format below (the example below is the label map for my Pinochle Deck Card Detector):
+```
+item {
+  id: 1
+  name: 'nine'
+}
+
+item {
+  id: 2
+  name: 'ten'
+}
+
+item {
+  id: 3
+  name: 'jack'
+}
+
+item {
+  id: 4
+  name: 'queen'
+}
+
+item {
+  id: 5
+  name: 'king'
+}
+
+item {
+  id: 6
+  name: 'ace'
+}
+```
+The label map ID numbers should be the same as what is defined in the generate_tfrecord.py file. For instance, for the basketball, shirt, and shoe detector example mentioned in Step 4, the labelmap.pbtxt file will look like:
+```
+item {
+  id: 1
+  name: 'basketball'
+}
+
+item {
+  id: 2
+  name: 'shirt'
+}
+
+item {
+  id: 3
+  name: 'shoe'
+}
+```
+
+#### 5b. Configure training
+Finally, the object detection training pipeline must be configured. It defines which model and what parameters will be used for training. This is the last step before running training!
+
+Navigate to C:\tensorflow1\models\research\object_detection\samples\configs and copy the faster_rcnn_inception_v2_pets.config file into the \object_detection\training directory. Then, open the file with a text editor. There are several changes to make to the .config file, mainly changing the number of classes and examples, and adding the file paths to the training data.
+
+Make the following changes to the faster_rcnn_inception_v2_pets.config file:
+- Line 9. Change num_classes to the number of different objects you want the classifier to detect. For the above basketball, shirt, and shoe detector, it would be num_classes : 3 .
+- Line 110. Change fine_tune_checkpoint to:
+fine_tune_checkpoint : “C://tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
+Note: The path must be entered with two forward slashes after C: and single forward slashes elsewhere, or TensorFlow will give a file path error when trying to train the model.
+- Lines 126 and 128. In the train_input_reader section, change input_path and label_map_path to:
+input_path : "C://tensorflow1/models/research/object_detection/train.record"
+label_map_path: "C://tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
+- Line 132. Change num_examples to the number of images you have in the \images\test directory.
+- Lines 140 and 142. In the eval_input_reader section, change input_path and label_map_path to:
+input_path : "C://tensorflow1/models/research/object_detection/test.record"
+label_map_path: "C://tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
+
+Save the file after the changes have been made. That’s it! The training job is all configured and ready to go!
+
+### 6. Run the Training
+Here we go! From the \object_detection directory, issue the following command to begin training:
+```
+python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
+```
+If everything has been set up correctly, TensorFlow will initialize the training. The initialization can take up to 30 seconds before the actual training begins. When training begins, it will look like this:
+
+* Picture of training
+
+Each step of training reports the loss. It will start high and get lower and lower as training progresses. For my training on the Faster-RCNN-Inception-V2 model, it started at about 1.6 and quickly dropped below 0.8. I recommend allowing your model to train until the loss consistently drops below 0.05, which will take about 40,000 steps, or about 2 hours. Note: The loss numbers will be different if a different model is used. MobileNet-SSD starts with a loss of about 20, and should be trained until the loss is consistently under 2.
+
+You can view the progress of the training job by using TensorBoard. To do this, open a new instance of Anaconda Prompt, activate the tensorflow1 virtual environment, change to the C:\tensorflow1\models\research\object_detection directory, and issue the following command:
+```
+(tensorflow1) C:\tensorflow1\models\research\object_detection>tensorboard --logdir=training
+```
+This will create a webpage on your local machine at http://<YourPCName>:6006, which can be viewed through a web browser. The TensorBoard page provides information and graphs that show how the training is progressing. One important graph is the Loss graph, which shows the overall loss of the classifier over time.
+
+* Picture of loss graph
+
+The training routine periodically saves checkpoints about every five minutes. You can terminate the training by pressing Ctrl+C while in the command prompt window. I typically wait until just after a checkpoint has been saved to terminate the training. You can terminate training and start it later, and it will restart from the last saved checkpoint. The checkpoint at the highest number of steps will be used to generate the frozen inference graph.
+
+### 7. Export Inference Graph
+Now that training is complete, the last step is to generate the frozen inference graph (.pb file). From the \object_detection folder, issue the following command, where “XXXX” in “model.ckpt-XXXX” should be replaced with the highest-numbered .ckpt file in the training folder:
+```
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix training/model.ckpt-XXXX --output_directory inference_graph
+```
+This creates a frozen_inference_graph.pb file in the \object_detection\inference_graph folder. The .pb file contains the object detection classifier.
+
+### 8. Use Your Newly Trained Object Detection Classifier!
+The object detection classifier is all ready to go! I’ve written Python scripts to test it out on an image, video, or webcam feed.
+
+Before running the Python scripts, you need to modify the NUM_CLASSES variable in the script to equal the number of classes you want to detect. (For my Pinochle Card Detector, there are six cards I want to detect, so NUM_CLASSES = 6.)
+
+To test your object detector, move a picture of the object or objects into the \object_detection\ folder, and change the IMAGE_NAME variable in the Object_detection_image.py to match the file name of the picture. Alternatively, you can use a video of the objects (using Object_detection_video.py), or just plug in a USB webcam and point it at the objects (using Object_detection_webcam.py).
+
+To run any of the scripts, type “idle” in the Anaconda Command Prompt (with the “tensorflow1” virtual environment activated) and press ENTER. This will open IDLE, and from there, you can open any of the scripts and run them.
+
+If everything is working properly, the object detector will initialize for about 10 seconds and then display a window showing any objects it’s detected in the image!
+
+* Picture of detected cards
+
+If you encounter errors, please check out the Appendix: it has a list of errors that I ran in to while setting up my object detection classifier. You can also trying Googling the error, there is usually useful information on Stack Exchange or in TensorFlow’s Issues on GitHub.
+
+## Appendix: Common Errors
+It appears that the TensorFlow Object Detection API was developed on a Linux-based operating system, and most of the directions given by the documentation is for a Linux OS. Trying to get a Linux-developed software library to work on Windows can be challenging. There are many little snags that I ran in to while trying to set up tensorflow-gpu to train an object detection classifier on Windows 10. This Appendix is a list of errors I ran in to, and their resolutions.
