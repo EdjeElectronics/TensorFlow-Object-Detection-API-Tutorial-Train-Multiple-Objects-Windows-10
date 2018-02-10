@@ -119,7 +119,7 @@ The PATH variable must be configured to add the \models, \models\research, and \
 (tensorflow1) C:\> set PYTHONPATH=C:\tensorflow1\models;C:\tensorflow1\models\research;C:\tensorflow1\models\research\slim
 (tensorflow1) C:\> set PATH=%PATH%;%PYTHONPATH%
 ```
-**Note: Every time the "tensorflow1" virtual environment is exited, the PATH and PYTHONPATH variables are reset and need to be set up again.**
+*Note: Every time the "tensorflow1" virtual environment is exited, the PATH and PYTHONPATH variables are reset and need to be set up again.*
 
 #### 2f. Compile Protobufs and run setup.py
 Next, compile the Protobuf files, which are used by TensorFlow to configure model and training parameters. Unfortunately, the short protoc compilation command posted on TensorFlow’s Object Detection API [installation page](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md) does not work on Windows. Every  .proto file in the \object_detection\protos directory must be called out individually by the command.
@@ -143,10 +143,13 @@ The TensorFlow Object Detection API is now all set up to use pre-trained models 
 ```
 This opens the script in your default web browser and allows you to step through the code one section at a time. You can step through each section by clicking the “Run” button in the upper toolbar. The section is done running when the “In [ * ]” text next to the section populates with a number (e.g. “In [1]”). 
 
-**Note: part of the script downloads the ssd_mobilenet_v1 model from GitHub, which is about 74MB. This means it will take some time to complete the section, so be patient.**
+*Note: part of the script downloads the ssd_mobilenet_v1 model from GitHub, which is about 74MB. This means it will take some time to complete the section, so be patient.*
 
 Once you have stepped all the way through the script, you should see two labeled images at the bottom section the page. If you see this, then everything is working properly! If not, the bottom section will report any errors encountered. See the Appendix for a list of errors I encountered while setting this up.
-* Picture of labeled puppy dogs in Jupyter notebook
+
+<p align="center">
+  <img src="doc/jupyter_notebook_dogs.jpg">
+</p>
 
 ### 3. Gather and Label Pictures
 Now that the TensorFlow Object Detection API is all set up and ready to go, we need to provide the images it will use to train a new detection classifier.
@@ -156,7 +159,9 @@ TensorFlow needs hundreds of images on of an object to train a good detection cl
 
 For my Pinochle Card Detection classifier, I have six different objects I want to detect (the card ranks nine, ten, jack, queen, king, and ace – I am not trying to detect suit, just rank). I used my iPhone to take about 40 pictures of each card on its own, with various other non-desired objects in the pictures. Then, I took about another 100 pictures with multiple cards in the picture. I know I want to be able to detect the cards when they’re overlapping, so I made sure to have the cards be overlapped in many images.
 
-* Picture: collage of card images
+<p align="center">
+  <img src="doc/collage.jpg">
+</p>
 
 You can use your phone to take pictures of the objects or download images of the objects from Google Image Search. I recommend having at least 200 pictures overall. I used 311 pictures to train my card detector.
 
@@ -172,7 +177,9 @@ Here comes the fun part! With all the pictures gathered, it’s time to label th
 
 Download and install LabelImg, point it to your \images\train directory, and then draw a box around each object in each image. Repeat the process for all the images in the \images\test directory. This will take a while! 
 
-* Picture of labeled image
+<p align="center">
+  <img src="doc/labels.jpg">
+</p>
 
 LabelImg saves a .xml file containing the label data for each image. These .xml files will be used to generate TFRecords, which are one of the inputs to the TensorFlow trainer. Once you have labeled and saved each image, there will be one .xml file for each image in the \test and \train directories.
 
