@@ -134,9 +134,87 @@ The TensorFlow Object Detection API is now all set up to use pre-trained models 
 ```
 This opens the script in your default web browser and allows you to step through the code one section at a time. You can step through each section by clicking the “Run” button in the upper toolbar. The section is done running when the “In [ * ]” text next to the section populates with a number (e.g. “In [1]”). 
 
-Note: part of the script downloads the ssd_mobilenet_v1 model from GitHub, which is about 74MB. This means it will take some time to complete the section, so be patient.
+**Note: part of the script downloads the ssd_mobilenet_v1 model from GitHub, which is about 74MB. This means it will take some time to complete the section, so be patient.**
 
 Once you have stepped all the way through the script, you should see two labeled images at the bottom section the page. If you see this, then everything is working properly! If not, the bottom section will report any errors encountered. See the Appendix for a list of errors I encountered while setting this up.
 * Picture of labeled puppy dogs in Jupyter notebook
 
+### 3. Gather and Label Pictures
+Now that the TensorFlow Object Detection API is all set up and ready to go, we need to provide the images it will use to train a new detection classifier.
 
+#### 3a. Gather Pictures
+TensorFlow needs hundreds of images on of an object to train a good detection classifier. To train a robust classifier, the training images should have random objects in the image along with the desired objects, and should have a variety of backgrounds and lighting conditions. There should be some images where the desired object is partially obscured, overlapped with something else, or only halfway in the picture. 
+
+For my Pinochle Card Detection classifier, I have six different objects I want to detect (the card ranks nine, ten, jack, queen, king, and ace – I am not trying to detect suit, just rank). I used my iPhone to take about 40 pictures of each card on its own, with various other non-desired objects in the pictures. Then, I took about another 100 pictures with multiple cards in the picture. I know I want to be able to detect the cards when they’re overlapping, so I made sure to have the cards be overlapped in many images.
+
+* Picture: collage of card images
+
+You can use your phone to take pictures of the objects or download images of the objects from Google Image Search. I recommend having at least 200 pictures overall. I used 311 pictures to train my card detector.
+
+Make sure the images aren’t too large. They should be less than 200KB each, and their resolution shouldn’t be more than 720x1280. The larger the images are, the longer it will take to train the classifier. You can use the resizer.py script in this repository to reduce the size of the images.
+
+After you have all the pictures you need, move 20% of them to the \object_detection\images\test directory, and 80% of them to the \object_detection\images\train directory. Make sure there are a variety of pictures in both the \test and \train directories.
+
+#### 3b. Label Pictures
+Here comes the fun part! With all the pictures gathered, it’s time to label the desired objects in every picture. LabelImg is a great tool for labeling images, and its GitHub page has very clear instructions on how to install and use it.
+
+[LabelImg GitHub link](https://github.com/tzutalin/labelImg)
+[LabelImg download link](https://www.dropbox.com/s/tq7zfrcwl44vxan/windows_v1.6.0.zip?dl=1)
+
+Download and install LabelImg, point it to your \images\train directory, and then draw a box around each object in each image. Repeat the process for all the images in the \images\test directory. This will take a while! 
+
+* Picture of labeled image
+
+LabelImg saves a .xml file containing the label data for each image. These .xml files will be used to generate TFRecords, which are one of the inputs to the TensorFlow trainer. Once you have labeled and saved each image, there will be one .xml file for each image in the \test and \train directories.
+
+### 4. Generate Training Data
+With the images labeled, it’s time to generate the TFRecords that serve as input data to the TensorFlow training model. This tutorial uses the xml_to_csv.py and generate_tfrecord.py scripts from [Dat Tran’s Raccoon Detector dataset](https://github.com/datitran/raccoon_dataset), with some slight modifications to work with our directory structure.
+
+First, the image .xml data will be used to create .csv files containing all the data for the train and test images. From the \object_detection folder, issue the following command in the Anaconda command prompt:
+```
+(tensorflow1) C:\tensorflow1\models\research\object_detection> python xml_to_csv.py
+```
+This creates a train_labels.csv and test_labels.csv file in the \object_detection\images folder. 
+
+Next, open the generate_tfrecord.py file in a text editor. Replace the label map starting at line 31 with your own label map, where each object is assigned an id number. This same number assignment will be used when configuring the labelmap.pbtxt file in Step 5b. 
+
+For example, say you are training a classifier to detect basketballs, shirts, and shoes. You will replace the following code in generate_record.py:
+```
+# TO-DO replace this with label map
+def class_text_to_int(row_label):
+    if row_label == 'nine':
+        return 1
+    elif row_label == 'ten':
+        return 2
+    elif row_label == 'jack':
+        return 3
+    elif row_label == 'queen':
+        return 4
+    elif row_label == 'king':
+        return 5
+    elif row_label == 'ace':
+        return 6
+    else:
+        None
+```
+With this:
+```
+# TO-DO replace this with label map
+def class_text_to_int(row_label):
+    if row_label == 'basketball':
+        return 1
+    elif row_label == 'shirt':
+        return 2
+    elif row_label == 'shoe':
+        return 3
+    else:
+        None
+```
+Then, generate the TFRecord files by issuing these commands from the \object_detection folder:
+```
+python generate_tfrecord.py --csv_input=images\train_labels.csv --image_dir=images\train --output_path=train.record
+python generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=images\test --output_path=test.record
+```
+These generate a train.record and a test.record file in \object_detection. These will be used to train the new object detection classifier.
+
+### 5. Create Label Map and Configure Training
