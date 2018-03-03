@@ -1,7 +1,7 @@
-# How To Train an Object Detection Classifier for Multiple Objects Using TensorFlow 1.5 (GPU) on Windows 10
+# How To Train an Object Detection Classifier for Multiple Objects Using TensorFlow (GPU) on Windows 10
 
 ## Brief Summary
-This repository is a tutorial for how to use TensorFlow's Object Detection API to train an object detection classifier for multiple objects on Windows 10, 8, or 7. (It will also work on Linux-based OSes with some minor changes.) 
+This repository is a tutorial for how to use TensorFlow's Object Detection API to train an object detection classifier for multiple objects on Windows 10, 8, or 7. (It will also work on Linux-based OSes with some minor changes.) It was written using TensorFlow version 1.5, but will also work for TensorFlow 1.6
 
 I also made a YouTube video that walks through this tutorial:
 
@@ -303,7 +303,7 @@ Make the following changes to the faster_rcnn_inception_v2_pets.config file. Not
 
 - Line 9. Change num_classes to the number of different objects you want the classifier to detect. For the above basketball, shirt, and shoe detector, it would be num_classes : 3 .
 - Line 110. Change fine_tune_checkpoint to:
-  - fine_tune_checkpoint : “C:/tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
+  - fine_tune_checkpoint : "C:/tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
 
 - Lines 126 and 128. In the train_input_reader section, change input_path and label_map_path to:
   - input_path : "C:/tensorflow1/models/research/object_detection/train.record"
