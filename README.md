@@ -1,9 +1,12 @@
 # How To Train an Object Detection Classifier for Multiple Objects Using TensorFlow (GPU) on Windows 10
 
 ## Brief Summary
-This repository is a tutorial for how to use TensorFlow's Object Detection API to train an object detection classifier for multiple objects on Windows 10, 8, or 7. (It will also work on Linux-based OSes with some minor changes.) It was written using TensorFlow version 1.5, but will also work for TensorFlow 1.6
+This repository is a tutorial for how to use TensorFlow's Object Detection API to train an object detection classifier for multiple objects on Windows 10, 8, or 7. (It will also work on Linux-based OSes with some minor changes.) It was originally written using TensorFlow version 1.5, but will also work for newer versions of TensorFlow.
 
-I also made a YouTube video that walks through this tutorial:
+Last updated: 4/7/2018 with TensorFlow v1.7
+Changes: Added Cython to list of packages to install in Section 2d. Removed instructions to add PYTHONPATH to PATH in Section 2e, because it's not needed.
+
+I also made a YouTube video that walks through this tutorial. Any discrepancies between the video and this written tutorial are due to updates required for using newer versions of TensorFlow. **If there are differences between this written tutorial and the video, follow the written tutorial!**
 
 [![Link to my YouTube video!](https://raw.githubusercontent.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10/master/doc/YouTube%20video.jpg)](https://www.youtube.com/watch?v=Rgpfk6eYxJA)
 
@@ -95,7 +98,7 @@ Next, we'll work on setting up a virtual environment in Anaconda for tensorflow-
 
 In the command terminal that pops up, create a new virtual environment called “tensorflow1” by issuing the following command:
 ```
-C:\> conda create -n tensorflow1 pip
+C:\> conda create -n tensorflow1 pip python=3.5
 ```
 Then, activate the environment by issuing:
 ```
@@ -110,6 +113,7 @@ Install the other necessary packages by issuing the following commands:
 (tensorflow1) C:\> conda install -c anaconda protobuf
 (tensorflow1) C:\> pip install pillow
 (tensorflow1) C:\> pip install lxml
+(tensorflow1) C:\> pip install Cython
 (tensorflow1) C:\> pip install jupyter
 (tensorflow1) C:\> pip install matplotlib
 (tensorflow1) C:\> pip install pandas
@@ -117,13 +121,12 @@ Install the other necessary packages by issuing the following commands:
 ```
 (Note: The ‘pandas’ and ‘opencv-python’ packages are not needed by TensorFlow, but they are used in the Python scripts to generate TFRecords and to work with images, videos, and webcam feeds.)
 
-#### 2e. Configure PATH and PYTHONPATH environment variables
-The PATH variable must be configured to add the \models, \models\research, and \models\research\slim directories. As an electrical engineer, I'm not really sure how environment variables work, but for some reason, you need to create a PYTHONPATH variable with these directories, and then add PYTHONPATH to the PATH variable. Otherwise, it will not work. Do this by issuing the following commands (from any directory):
+#### 2e. Configure PYTHONPATH environment variable
+A PYTHONPATH variable must be created that points to the \models, \models\research, and \models\research\slim directories. Do this by issuing the following commands (from any directory):
 ```
 (tensorflow1) C:\> set PYTHONPATH=C:\tensorflow1\models;C:\tensorflow1\models\research;C:\tensorflow1\models\research\slim
-(tensorflow1) C:\> set PATH=%PATH%;PYTHONPATH
 ```
-(Note: Every time the "tensorflow1" virtual environment is exited, the PATH and PYTHONPATH variables are reset and need to be set up again.)
+(Note: Every time the "tensorflow1" virtual environment is exited, the PYTHONPATH variable is reset and needs to be set up again.)
 
 #### 2f. Compile Protobufs and run setup.py
 Next, compile the Protobuf files, which are used by TensorFlow to configure model and training parameters. Unfortunately, the short protoc compilation command posted on TensorFlow’s Object Detection API [installation page](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md) does not work on Windows. Every  .proto file in the \object_detection\protos directory must be called out individually by the command.
