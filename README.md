@@ -1,11 +1,11 @@
 # How To Train an Object Detection Classifier for Multiple Objects Using TensorFlow (GPU) on Windows 10
 
 ## Brief Summary
+*Last updated: 4/7/2018 with TensorFlow v1.7*
+
+*Changes: Added Cython to list of packages to install in Section 2d. Removed instructions to add PYTHONPATH to PATH in Section 2e, because it's not needed.*
+
 This repository is a tutorial for how to use TensorFlow's Object Detection API to train an object detection classifier for multiple objects on Windows 10, 8, or 7. (It will also work on Linux-based OSes with some minor changes.) It was originally written using TensorFlow version 1.5, but will also work for newer versions of TensorFlow.
-
-Last updated: 4/7/2018 with TensorFlow v1.7
-
-Changes: Added Cython to list of packages to install in Section 2d. Removed instructions to add PYTHONPATH to PATH in Section 2e, because it's not needed.
 
 I also made a YouTube video that walks through this tutorial. Any discrepancies between the video and this written tutorial are due to updates required for using newer versions of TensorFlow. 
 
