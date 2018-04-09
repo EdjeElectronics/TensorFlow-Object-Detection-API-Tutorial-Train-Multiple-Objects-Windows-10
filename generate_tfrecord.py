@@ -48,7 +48,7 @@ def class_text_to_int(row_label):
 def split(df, group):
     data = namedtuple('data', ['filename', 'object'])
     gb = df.groupby(group)
-    return [data(filename, gb.get_group(x)) for filename, x in zip(gb.groups.keys(), gb.groups)]
+    return [data(filename, gb.get_group(filename)) for filename in gb.groups.keys()]
 
 
 def create_tf_example(group, path):
