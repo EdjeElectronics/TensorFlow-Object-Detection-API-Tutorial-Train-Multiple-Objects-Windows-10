@@ -1,7 +1,5 @@
 # How To Train an Object Detection Classifier for Multiple Objects Using TensorFlow (GPU) on Windows 10
 
-Shameless plug: If you found this guide useful, please consider donating to my team for the Seattle Great Strides Walk fundraiser this weekend (5/20). All donations go directly to the Cystic Fibrosis Foundation!   http://fightcf.cff.org/site/TR/GreatStrides/132_Washington_Seattle?px=3882392&pg=personal&fr_id=6695
-
 ## Brief Summary
 *Last updated: 4/7/2018 with TensorFlow v1.7*
 
