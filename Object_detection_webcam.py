@@ -111,7 +111,7 @@ while(True):
         category_index,
         use_normalized_coordinates=True,
         line_thickness=8,
-        min_score_thresh=0.85)
+        min_score_thresh=0.60)
 
     # All the results have been drawn on the frame, so it's time to display it.
     cv2.imshow('Object detector', frame)
