@@ -196,6 +196,12 @@ Download and install LabelImg, point it to your \images\train directory, and the
 
 LabelImg saves a .xml file containing the label data for each image. These .xml files will be used to generate TFRecords, which are one of the inputs to the TensorFlow trainer. Once you have labeled and saved each image, there will be one .xml file for each image in the \test and \train directories.
 
+Also, you can check if the size of each bounding box is correct by running sizeChecker.py
+
+```
+(tensorflow1) C:\tensorflow1\models\research\object_detection> python sizeChecker.py --move
+```
+
 ### 4. Generate Training Data
 With the images labeled, it’s time to generate the TFRecords that serve as input data to the TensorFlow training model. This tutorial uses the xml_to_csv.py and generate_tfrecord.py scripts from [Dat Tran’s Raccoon Detector dataset](https://github.com/datitran/raccoon_dataset), with some slight modifications to work with our directory structure.
 
