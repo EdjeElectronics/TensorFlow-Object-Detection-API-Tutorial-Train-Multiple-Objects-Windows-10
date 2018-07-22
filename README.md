@@ -213,7 +213,7 @@ This creates a train_labels.csv and test_labels.csv file in the \object_detectio
 
 Next, open the generate_tfrecord.py file in a text editor. Replace the label map starting at line 31 with your own label map, where each object is assigned an ID number. This same number assignment will be used when configuring the labelmap.pbtxt file in Step 5b. 
 
-For example, say you are training a classifier to detect basketballs, shirts, and shoes. You will replace the following code in generate_record.py:
+For example, say you are training a classifier to detect basketballs, shirts, and shoes. You will replace the following code in generate_tfrecord.py:
 ```
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
@@ -230,7 +230,7 @@ def class_text_to_int(row_label):
     elif row_label == 'ace':
         return 6
     else:
-        None
+        return None
 ```
 With this:
 ```
@@ -243,7 +243,7 @@ def class_text_to_int(row_label):
     elif row_label == 'shoe':
         return 3
     else:
-        None
+        return None
 ```
 Then, generate the TFRecord files by issuing these commands from the \object_detection folder:
 ```
