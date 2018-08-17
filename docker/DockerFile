@@ -1,0 +1,34 @@
+FROM "ubuntu"
+RUN apt-get update && yes | apt-get upgrade
+RUN apt-get update
+RUN apt-get install -y git python-pip libsm6 libxrender-dev python-pil python-lxml protobuf-compiler
+RUN mkdir -p /tensorflow/models
+
+COPY ts-models/models /tensorflow/models
+COPY edje-tutorial/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10 /tensorflow/models/research/object_detection
+COPY faster_rcnn_inception_v2_coco_2018_01_28.tar.gz /tensorflow/models/research/object_detection
+COPY inference_graph /tensorflow/models/research/object_detection/inference_graph
+
+WORKDIR /tensorflow/models/research/object_detection
+RUN tar -xzf faster_rcnn_inception_v2_coco_2018_01_28.tar.gz
+
+WORKDIR /tensorflow/models/research
+
+RUN pip install tensorflow
+RUN pip install jupyter
+RUN pip install matplotlib
+RUN pip install Cython
+RUN pip install pandas
+RUN pip install opencv-python
+
+RUN protoc object_detection/protos/*.proto --python_out=.
+RUN export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+
+RUN python setup.py build
+RUN python setup.py install
+
+RUN jupyter notebook --generate-config --allow-root
+RUN echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /root/.jupyter/jupyter_notebook_config.py
+EXPOSE 8888
+
+CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/tensorflow/models/research/object_detection", "--ip='*'", "--port=8888", "--no-browser"]
