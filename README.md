@@ -415,3 +415,21 @@ This error occurs when the filepaths in the training configuration file (faster_
 ```
 “C:/path/to/model.file”
 ```
+
+#### 5. ValueError: Tried to convert 't' to a tensor and failed. Error: Argument must be a dense tensor: range(0, 3) - got shape [3], but wanted [].
+
+The issue is with models/research/object_detection/utils/learning_schedules.py Currently it is
+```
+rate_index = tf.reduce_max(tf.where(tf.greater_equal(global_step, boundaries),
+                                      range(num_boundaries),
+                                      [0] * num_boundaries))
+```
+Wrap list() around the range() like this:
+
+```
+rate_index = tf.reduce_max(tf.where(tf.greater_equal(global_step, boundaries),
+                                     list(range(num_boundaries)),
+                                      [0] * num_boundaries))
+```
+
+[Ref: Tensorflow Issue#3705](https://github.com/tensorflow/models/issues/3705#issuecomment-375563179)
