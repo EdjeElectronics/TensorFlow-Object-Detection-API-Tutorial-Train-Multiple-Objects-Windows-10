@@ -330,6 +330,8 @@ Make the following changes to the faster_rcnn_inception_v2_pets.config file. Not
 Save the file after the changes have been made. That’s it! The training job is all configured and ready to go!
 
 ### 6. Run the Training
+UPDATE 9/26/18: As of version 1.9, TensorFlow has deprecated the "train.py" file and replaced it with "model_main.py" file. I haven't been able to get model_main.py to work correctly yet (I run in to errors related to pycocotools). Fortunately, the train.py file is still available in the /object_detection/legacy folder. Simply move train.py from /object_detection/legacy into the /object_detection folder and then continue following the steps below.
+
 Here we go! From the \object_detection directory, issue the following command to begin training:
 ```
 python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
