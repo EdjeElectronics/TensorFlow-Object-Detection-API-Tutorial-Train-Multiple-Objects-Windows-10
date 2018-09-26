@@ -3,7 +3,7 @@
 ## Brief Summary
 *Last updated: 9/26/2018 with TensorFlow v1.10*
 
-*Changes: Added note that the train.py file is now located in the /object_detection/legacy folder and must be moved into the main folder before issuing the training command.
+*Changes: Added note that the train.py file is now located in the /object_detection/legacy folder and must be moved into the main folder before issuing the training command.*
 
 This repository is a tutorial for how to use TensorFlow's Object Detection API to train an object detection classifier for multiple objects on Windows 10, 8, or 7. (It will also work on Linux-based OSes with some minor changes.) It was originally written using TensorFlow version 1.5, but will also work for newer versions of TensorFlow.
 
@@ -331,7 +331,7 @@ Save the file after the changes have been made. That’s it! The training job is
 
 ### 6. Run the Training
 **UPDATE 9/26/18:** 
-*As of version 1.9, TensorFlow has deprecated the "train.py" file and replaced it with "model_main.py" file. I haven't been able to get model_main.py to work correctly yet (I run in to errors related to pycocotools). Fortunately, the train.py file is still available in the /object_detection/legacy folder. Simply move train.py from /object_detection/legacy into the /object_detection folder and then continue following the steps below.
+*As of version 1.9, TensorFlow has deprecated the "train.py" file and replaced it with "model_main.py" file. I haven't been able to get model_main.py to work correctly yet (I run in to errors related to pycocotools). Fortunately, the train.py file is still available in the /object_detection/legacy folder. Simply move train.py from /object_detection/legacy into the /object_detection folder and then continue following the steps below.*
 
 Here we go! From the \object_detection directory, issue the following command to begin training:
 ```
