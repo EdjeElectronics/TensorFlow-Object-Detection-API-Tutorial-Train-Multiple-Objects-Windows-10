@@ -43,9 +43,9 @@ TensorFlow-GPU allows your PC to use the video card to provide extra processing 
 
 ## Steps
 ### 1. Install TensorFlow-GPU, CUDA, and cuDNN
-Follow [this YouTube video by Mark Jay](https://www.youtube.com/watch?v=RplXYjxgZbw), which shows the process for installing CUDA, cuDNN, and TensorFlow-GPU. The video is made for TensorFlow-GPU v1.4, but the “pip install --upgrade tensorflow-gpu” command will automatically download the latest version of TensorFlow (v1.13.1 as of 4/2/19). 
+Follow [this YouTube video by Mark Jay](https://www.youtube.com/watch?v=RplXYjxgZbw), which shows the process for installing CUDA, cuDNN, and TensorFlow-GPU. The video is made for TensorFlow-GPU v1.4, but the “pip install --upgrade tensorflow-gpu” command will automatically download the latest version of TensorFlow (v1.13.1 as of 4/2/19). Download and install the CUDA and cuDNN versions for the latest TensorFlow version, rather than CUDA v8.0 and cuDNN v6.0 as instructed in the video. The [TensorFlow website](https://www.tensorflow.org/install/gpu) indicates which versions of CUDA and cuDNN are needed for the latest version of TensorFlow. 
 
-Download and install the CUDA and cuDNN versions for the latest TensorFlow version, rather than CUDA v8.0 and cuDNN v6.0 as instructed in the video. The [TensorFlow website](https://www.tensorflow.org/install/gpu) indicates which versions of CUDA and cuDNN are needed for the latest version of TensorFlow. If you are using an older version of TensorFlow, make sure you use the CUDA and cuDNN are compatible with the TensorFlow version you are using. [Here](https://www.tensorflow.org/install/source#tested_build_configurations) is a table showing which version of TensorFlow requires which versions of CUDA and cuDNN.
+If you are using an older version of TensorFlow, make sure you use the CUDA and cuDNN are compatible with the TensorFlow version you are using. [Here](https://www.tensorflow.org/install/source#tested_build_configurations) is a table showing which version of TensorFlow requires which versions of CUDA and cuDNN.
 
 Be sure to install Anaconda with Python 3.6 (or later) as instructed in the video, because the Anaconda virtual environment will be used for the rest of this tutorial.
 
