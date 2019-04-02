@@ -47,7 +47,7 @@ Follow [this YouTube video by Mark Jay](https://www.youtube.com/watch?v=RplXYjxg
 
 If you are using an older version of TensorFlow, make sure you use the CUDA and cuDNN are compatible with the TensorFlow version you are using. [Here](https://www.tensorflow.org/install/source#tested_build_configurations) is a table showing which version of TensorFlow requires which versions of CUDA and cuDNN.
 
-Be sure to install Anaconda with Python 3.6 (or later) as instructed in the video, because the Anaconda virtual environment will be used for the rest of this tutorial.
+Be sure to install (Anaconda)[https://www.anaconda.com/distribution/#download-section] as instructed in the video, because the Anaconda virtual environment will be used for the rest of this tutorial. Note: The current version of Anaconda uses Python 3.7, which is not officially supported by TensorFlow. However, when creating an Anaconda virtual environment during Step 2d of this tutorial, we will tell it to use Python 3.5.
 
 Visit [TensorFlow's website](https://www.tensorflow.org/install) for further installation details, including how to install it on other operating systems (like Linux). The [object detection repository](https://github.com/tensorflow/models/tree/master/research/object_detection) itself also has [installation instructions](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md).
 
