@@ -1,7 +1,7 @@
 # How To Train an Object Detection Classifier for Multiple Objects Using TensorFlow (GPU) on Windows 10
 
 ## Brief Summary
-*Last updated: 9/26/2018 with TensorFlow v1.10*
+*Last updated: 4/2/2019 with TensorFlow v1.13.1*
 
 *Changes: Added note that the train.py file is now located in the /object_detection/legacy folder and must be moved into the main folder before issuing the training command.*
 
@@ -60,7 +60,8 @@ This portion of the tutorial goes over the full set up required. It is fairly me
 Create a folder directly in C: and name it “tensorflow1”. This working directory will contain the full TensorFlow object detection framework, as well as your training images, training data, trained classifier, configuration files, and everything else needed for the object detection classifier.
 
 Download the full TensorFlow object detection repository located at https://github.com/tensorflow/models by clicking the “Clone or Download” button and downloading the zip file. Open the downloaded zip file and extract the “models-master” folder directly into the C:\tensorflow1 directory you just created. Rename “models-master” to just “models”.
-(Note, this tutorial was done using this [GitHub commit](https://github.com/tensorflow/models/tree/079d67d9a0b3407e8d074a200780f3835413ef99) of the TensorFlow Object Detection API. If portions of this tutorial do not work, it may be necessary to download and use this exact commit rather than the most up-to-date version.)
+
+(Note, this tutorial was done using TensorFlow v1.5 and this [GitHub commit](https://github.com/tensorflow/models/tree/079d67d9a0b3407e8d074a200780f3835413ef99) of the TensorFlow Object Detection API. If portions of this tutorial do not work, it may be necessary to install TensorFlow v1.5 and use this exact commit rather than the most up-to-date version.)
 
 #### 2b. Download the Faster-RCNN-Inception-V2-COCO model from TensorFlow's model zoo
 TensorFlow provides several object detection models (pre-trained classifiers with specific neural network architectures) in its [model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). Some models (such as the SSD-MobileNet model) have an architecture that allows for faster detection but with less accuracy, while some models (such as the Faster-RCNN model) give slower detection but with more accuracy. I initially started with the SSD-MobileNet-V1 model, but it didn’t do a very good job identifying the cards in my images. I re-trained my detector on the Faster-RCNN-Inception-V2 model, and the detection worked considerably better, but with a noticeably slower speed.
@@ -103,9 +104,11 @@ In the command terminal that pops up, create a new virtual environment called �
 ```
 C:\> conda create -n tensorflow1 pip python=3.5
 ```
-Then, activate the environment by issuing:
+Then, activate the environment and update pip by issuing:
 ```
 C:\> activate tensorflow1
+
+(tensorflow1) C:\>python -m pip install --upgrade pip
 ```
 Install tensorflow-gpu in this environment by issuing:
 ```
