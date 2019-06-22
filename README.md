@@ -114,11 +114,7 @@ Install tensorflow-gpu in this environment by issuing:
 (tensorflow1) C:\> pip install --ignore-installed --upgrade tensorflow-gpu
 ```
 
-NOTE: You can also use the CPU-only version of TensorFow, but it will run much slower. If you want to use the CPU-only version, just issue:
-
-```
-(tensorflow1) C:\> pip install --ignore-installed --upgrade tensorflow
-```
+NOTE: You can also use the CPU-only version of TensorFow, but it will run much slower. If you want to use the CPU-only version, just use "tensorflow" instead of "tensorflow-gpu" in the previous command.
 
 Install the other necessary packages by issuing the following commands:
 ```
