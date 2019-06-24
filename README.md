@@ -235,7 +235,7 @@ def class_text_to_int(row_label):
     elif row_label == 'ace':
         return 6
     else:
-        return None
+        None
 ```
 With this:
 ```
@@ -248,7 +248,7 @@ def class_text_to_int(row_label):
     elif row_label == 'shoe':
         return 3
     else:
-        return None
+        None
 ```
 Then, generate the TFRecord files by issuing these commands from the \object_detection folder:
 ```
