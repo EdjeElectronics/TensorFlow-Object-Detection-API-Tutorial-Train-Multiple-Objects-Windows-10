@@ -456,3 +456,14 @@ rate_index = tf.reduce_max(tf.where(tf.greater_equal(global_step, boundaries),
 ```
 
 [Ref: Tensorflow Issue#3705](https://github.com/tensorflow/models/issues/3705#issuecomment-375563179)
+
+#### 6. ImportError: DLL load failed: The specified procedure could not be found.   (or other DLL-related errors)
+This error occurs because the CUDA and cuDNN versions you have installed are not compatible with the version of TensorFlow you are using. The easiest way to resolve this error is to use Anaconda's cudatoolkit package rather than manually installing CUDA and cuDNN. If you ran into these errors, try creating a new Anaconda virtual environment:
+```
+conda create -n tensorflow2 pip python=3.5
+```
+Then, once inside the environment, install TensorFlow using CONDA rather than PIP:
+```
+conda install tensorflow-gpu
+```
+Then restart this guide from Step 2 (but you can skip the part where you install TensorFlow in Step 2d).
