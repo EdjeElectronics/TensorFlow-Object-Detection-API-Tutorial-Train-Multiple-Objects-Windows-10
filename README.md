@@ -3,7 +3,7 @@
 ## Brief Summary
 *Last updated: 6/22/2019 with TensorFlow v1.13.1*
 
-*A Korean translation of this guide is located in the [translate folder](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10/blob/master/translate/README.md) (thanks @cocopambag !). If you would like to contribute a translation in another language, please feel free! You can add it as a pull request and I will merge it when I get the chance.*
+*A Korean translation of this guide is located in the [translate folder](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10/blob/master/translate/README.md) (thanks @cocopambag!). If you would like to contribute a translation in another language, please feel free! You can add it as a pull request and I will merge it when I get the chance.*
 
 This repository is a tutorial for how to use TensorFlow's Object Detection API to train an object detection classifier for multiple objects on Windows 10, 8, or 7. (It will also work on Linux-based OSes with some minor changes.) It was originally written using TensorFlow version 1.5, but will also work for newer versions of TensorFlow.
 
