@@ -469,3 +469,6 @@ Then, once inside the environment, install TensorFlow using CONDA rather than PI
 conda install tensorflow-gpu
 ```
 Then restart this guide from Step 2 (but you can skip the part where you install TensorFlow in Step 2d).
+
+#### 7. In Step 2g, the Jupyter Notebook runs all the way through with no errors, but no pictures are displayed at the end.
+If you run the full Jupyter Notebook without getting any errors, but the labeled pictures still don't appear, try this: go in to object_detection/utils/visualization_utils.py and comment out the import statements around lines 29 and 30 that include matplotlib. Then, try re-running the Jupyter notebook. (The visualization_utils.py script changes quite a bit, so it might not be exactly line 29 and 30.)
