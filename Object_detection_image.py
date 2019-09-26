@@ -3,9 +3,9 @@
 # Author: Evan Juras
 # Date: 1/15/18
 # Description: 
-# This program uses a TensorFlow-trained classifier to perform object detection.
-# It loads the classifier uses it to perform object detection on an image.
-# It draws boxes and scores around the objects of interest in the image.
+# This program uses a TensorFlow-trained neural network to perform object detection.
+# It loads the classifier and uses it to perform object detection on an image.
+# It draws boxes, scores, and labels around the objects of interest in the image.
 
 ## Some of the code is copied from Google's example at
 ## https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
