@@ -403,6 +403,21 @@ If everything is working properly, the object detector will initialize for about
 
 If you encounter errors, please check out the Appendix: it has a list of errors that I ran in to while setting up my object detection classifier. You can also trying Googling the error. There is usually useful information on Stack Exchange or in TensorFlow’s Issues on GitHub.
 
+## Performance <pip vs conda>
+### Much Faster CPU Performance
+The conda Tensorflow packages leverage the Intel Math Kernel Library for Deep Neural Networks or the MKL-DNN starting with version 1.9.0. This library gives a huge performance boost. Here is a chart to prove it!
+
+<p align="center">
+  <img src="doc/pipvsconda.jpg">
+</p>
+
+As you can see, the performance of the conda installation can give over 8X the speed boost compared to the pip installation. That is great for people who still frequently use their CPU for training and inferencing. As a Machine Learning Engineer, I use my CPU to run a test train on my code before pushing it to a GPU enabled machine. This increase in speed will help me iterate faster. I also do a lot of inference on a CPU when I can, so this will help my models performance.
+
+Not only does the MKL library speed up your Tensorflow packages, it also speeds up other widely used libraries like NumPy, NumpyExr, SciPy, and Scikit-Learn! See how you can get that set up from links below.
+
+### Simpler install for the GPU version
+The conda install will automatically install the CUDA and CuDNN libraries needed for GPU support. The pip install will require you to do that manually. Everybody likes a one step process, especially when it comes to downloading libraries.
+
 ## Appendix: Common Errors
 It appears that the TensorFlow Object Detection API was developed on a Linux-based operating system, and most of the directions given by the documentation are for a Linux OS. Trying to get a Linux-developed software library to work on Windows can be challenging. There are many little snags that I ran in to while trying to set up tensorflow-gpu to train an object detection classifier on Windows 10. This Appendix is a list of errors I ran in to, and their resolutions.
 
