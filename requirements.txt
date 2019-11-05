@@ -1,0 +1,7 @@
+numpy==1.17.3
+termcolor==1.1.0
+Pillow==6.2.1
+object_detection==0.0.3
+pandas==0.25.3
+tensorflow==2.0.0
+utils==0.9.0
