@@ -90,7 +90,8 @@ num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 # expand image dimensions to have shape: [1, None, None, 3]
 # i.e. a single-column array, where each item in the column has the pixel RGB value
 image = cv2.imread(PATH_TO_IMAGE)
-image_expanded = np.expand_dims(image, axis=0)
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+image_expanded = np.expand_dims(image_rgb, axis=0)
 
 # Perform the actual detection by running the model with the image as input
 (boxes, scores, classes, num) = sess.run(
