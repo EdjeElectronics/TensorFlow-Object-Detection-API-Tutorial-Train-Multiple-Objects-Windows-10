@@ -96,7 +96,7 @@ while(True):
     # i.e. a single-column array, where each item in the column has the pixel RGB value
     ret, frame = video.read()
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame_expanded = np.expand_dims(frame, axis=0)
+    frame_expanded = np.expand_dims(frame_rgb, axis=0)
 
     # Perform the actual detection by running the model with the image as input
     (boxes, scores, classes, num) = sess.run(
