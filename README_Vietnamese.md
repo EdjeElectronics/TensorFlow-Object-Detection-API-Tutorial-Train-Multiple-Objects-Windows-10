@@ -31,7 +31,7 @@ Repository này chứa tất cả những file cần thiết để đào tạo m
   <img src="doc/detector1.jpg">
 </p>
 
-## Introduction
+## Giới thiệu
 Mục đích của hướng dẫn này là giải thích chi tiết cách đào tạo một mạng nơ-ron tích chập (CNN) của riêng bạn để nhận dạng và phân loại cho nhiều vật thể. Vào cuối hướng dẫn này, bạn sẽ có một chương trình có thể nhận dạng và vẽ khoanh vùng các đối tượng cụ thể trong ảnh, videos, hoặc với đầu vào của webcam. 
  
 Đã có một số hướng dẫn chi tiết về cách sử dụng TensorFlow's Object Detection API để huấn luyện một bộ phân loại cho một đối tượng. Tuy nhiên, hầu hết đều sử dụng hệ điều hành Linux. Nếu bạn giống như tôi, chắc bạn cũng đắn đo một chút khi cài đặt Linux trên PC - gaming với card đồ họa mạnh mẽ mà bạn dùng để đào tạo bộ phân loại. Object Detection API dường như đã được phát triển trên hệ điều hành Linux. Để thiết lập TensorFlow đào tạo một model trên Window, có một số cách giải quyết và cần được sử dụng để thay thế các lệnh đã hoạt động tốt trên Linux. Ngoài ra, hướng dẫn này sẽ giúp bạn đào tạo một bộ phân loại mà có thể nhận diện được nhiều vật thể, chứ không chỉ một.
@@ -86,7 +86,7 @@ TensorFlow cung cấp một số object detection model (pre-trained classifiers
 
 Bạn có thể chọn model phù hợp để đào tạo objection detection classifier của bạn. Nếu bạn muốn sử dụng object detector trên các thiết bị có cấu hình phần cứng hạn chế (như smart phone hay Raspberry Pi), hãy sử dụng SDD-MobileNet model. Nếu bạn chạy model trên các laptop hay PC có cấu hình mạnh, sử dụng RCNN models.
 
-This tutorial will use the Faster-RCNN-Inception-V2 model. [Download the model here.](http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_v2_coco_2018_01_28.tar.gz) Open the downloaded faster_rcnn_inception_v2_coco_2018_01_28.tar.gz file with a file archiver such as WinZip or 7-Zip and extract the faster_rcnn_inception_v2_coco_2018_01_28 folder to the C:\tensorflow1\models\research\object_detection folder. (Note: The model date and version will likely change in the future, but it should still work with this tutorial.)
+Hướng dẫn này sẽ sử dụng Faster-RCNN-Inception-V2 model. [Tải về model tại đây](http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_v2_coco_2018_01_28.tar.gz) Mở file faster_rcnn_inception_v2_coco_2018_01_28.tar.gz đã tải về và sử dụng WinZip hoặc 7-Zip sau đó giải nén thư mục faster_rcnn_inception_v2_coco_2018_01_28 đến thư mục C:\tensorflow1\models\research\object_detection. (Lưu ý: Phiên bản của model có thể sẽ thay đổi trong tương lai, nhưng nó vẫn sẽ hoạt động theo hướng dẫn này.)
 
 #### 2c. Download this tutorial's repository from GitHub
 Download the full repository located on this page (scroll to the top and click Clone or Download) and extract all the contents directly into the C:\tensorflow1\models\research\object_detection directory. (You can overwrite the existing "README.md" file.) This establishes a specific directory structure that will be used for the rest of the tutorial. 
