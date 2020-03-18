@@ -88,50 +88,50 @@ Bạn có thể chọn model phù hợp để đào tạo objection detection cl
 
 Hướng dẫn này sẽ sử dụng Faster-RCNN-Inception-V2 model. [Tải về model tại đây](http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_v2_coco_2018_01_28.tar.gz) Mở file faster_rcnn_inception_v2_coco_2018_01_28.tar.gz đã tải về và sử dụng WinZip hoặc 7-Zip sau đó giải nén thư mục faster_rcnn_inception_v2_coco_2018_01_28 đến thư mục C:\tensorflow1\models\research\object_detection. (Lưu ý: Phiên bản của model có thể sẽ thay đổi trong tương lai, nhưng nó vẫn sẽ hoạt động theo hướng dẫn này.)
 
-#### 2c. Download this tutorial's repository from GitHub
-Download the full repository located on this page (scroll to the top and click Clone or Download) and extract all the contents directly into the C:\tensorflow1\models\research\object_detection directory. (You can overwrite the existing "README.md" file.) This establishes a specific directory structure that will be used for the rest of the tutorial. 
+#### 2c. Tải xuống repository của hướng dẫn này từ Github
+Tải xuống toàn bộ repository tại trang này (cuộn lên đầu trang và click vào Clone or Download) và giải nén tất cả các file vào thư mục có đường dẫn C:\tensorflow1\models\research\object_detection. (Bạn có thể ghi đè lên file "README.md" hiện có.) Vậy là chúng ta đã hoàn thành việc thiết lập thư mục để sử dụng trong suốt hướng dẫn này.
 
-At this point, here is what your \object_detection folder should look like:
+Tại đây, cấu trúc các file trong thư mục \object_detection sẽ trông như thế này:
 
 <p align="center">
   <img src="doc/object_detection_directory.jpg">
 </p>
 
-This repository contains the images, annotation data, .csv files, and TFRecords needed to train a "Pinochle Deck" playing card detector. You can use these images and data to practice making your own Pinochle Card Detector. It also contains Python scripts that are used to generate the training data. It has scripts to test out the object detection classifier on images, videos, or a webcam feed. You can ignore the \doc folder and its files; they are just there to hold the images used for this readme.
+Repository bao gồm images, annotation data, .csv files và TFRecords cần thiết để đào tạo một trình nhận diện quân bài "Pinochle Deck". Bạn có thể sử dụng hình ảnh và dữ diệu này để luyện tập và tạo ra một trình nhận diện quân bài của riêng bạn. Nó bao gồm Python scripts thứ sẽ được sử dụng để tạo ra training data. Nó cũng có các scripts để kiểm thử object detection classifier trên hình ảnh, video hoặc đầu vào từ webcam. Bạn có thể bỏ qua thư mục \doc và các file bên trong, vì đây chỉ là nơi giữ các hình ảnh cho file readme này.
 
-If you want to practice training your own "Pinochle Deck" card detector, you can leave all the files as they are. You can follow along with this tutorial to see how each of the files were generated, and then run the training. You will still need to generate the TFRecord files (train.record and test.record) as described in Step 4. 
+Nếu bạn muốn luyện tập đào tạo một trình nhận diện quân bài "Pinochle Deck" của bạn, hãy giữ nguyên các file hiện có. Bạn có thể theo tiếp hướng dẫn này để biết làm cách nào mà các file được tạo ra, cách để bắt đầu đào tạo. Bạn sẽ cần tạo ra các file TFRecord (train.record và test.record) như mô tả ở Bước 4.
 
-You can also download the frozen inference graph for my trained Pinochle Deck card detector [from this Dropbox link](https://www.dropbox.com/s/va9ob6wcucusse1/inference_graph.zip?dl=0) and extract the contents to \object_detection\inference_graph. This inference graph will work "out of the box". You can test it after all the setup instructions in Step 2a - 2f have been completed by running the Object_detection_image.py (or video or webcam) script.
+Bạn có thể tải về các inference graph về nhận diện quân bài Pinochle Deck đã được huấn luyện sẵn của tôi [from this Dropbox link](https://www.dropbox.com/s/va9ob6wcucusse1/inference_graph.zip?dl=0) và giải nén các file bên trong đến \object_detection\inference_graph. Đây là inference graph đã hoạt động tốt. Bạn có thể test no sau khi đã hoàn thành các thiết lập tại Bước 2a - 2f và chạy file Object_detection_image.py (hoặc video hoặc webcam).
 
-If you want to train your own object detector, delete the following files (do not delete the folders):
-- All files in \object_detection\images\train and \object_detection\images\test
-- The “test_labels.csv” and “train_labels.csv” files in \object_detection\images
-- All files in \object_detection\training
--	All files in \object_detection\inference_graph
+Nếu bạn muốn tự đào tạo một object detector, hãy tiến hành xóa các file được liệt kê dưới đây (không xóa thư mục):
+- Tất cả các file trong \object_detection\images\train and \object_detection\images\test
+- File “test_labels.csv” và “train_labels.csv” files trong thư mục \object_detection\images
+- Tất cả các file trong \object_detection\training
+-	Tất cả các file trong \object_detection\inference_graph
 
-Now, you are ready to start from scratch in training your own object detector. This tutorial will assume that all the files listed above were deleted, and will go on to explain how to generate the files for your own training dataset.
+Bây giờ, bạn đã sẵn sàng để bắt đầu huấn luyện object detector của bạn. Đảm bảo rằng các bước ở trên đã hoàn thành và các file liệt kê ở trên đã được xóa, sau đây tôi sẽ tiếp tục giải thích các tạo ra những file cho bộ dữ liệu đào tạo của riêng bạn.
 
-#### 2d. Set up new Anaconda virtual environment
-Next, we'll work on setting up a virtual environment in Anaconda for tensorflow-gpu. From the Start menu in Windows, search for the Anaconda Prompt utility, right click on it, and click “Run as Administrator”. If Windows asks you if you would like to allow it to make changes to your computer, click Yes.
+#### 2d. Thiết lập một Anaconda virtual environment mới
+Tiếp theo, chúng ta sẽ tiến hành thiết lập một Anaconda virtual environment cho tensorflow-gpu. Từ menu Start của Windows, tìm kiếm Anaconda Prompt, click vào nó, và chọn “Run as Administrator”. Nếu Windows hỏi bạn có đồng ý cho chạy với quyền Admin không thì hãy click vào Yes.
 
-In the command terminal that pops up, create a new virtual environment called “tensorflow1” by issuing the following command:
+Tại cửa sổ terminal vừa xuất hiện, tạo một virtual environment đặt tên là “tensorflow1” bằng cách sử dụng lệnh dưới đây:
 ```
 C:\> conda create -n tensorflow1 pip python=3.5
 ```
-Then, activate the environment and update pip by issuing:
+Sau đó, kích hoạt môi trường và cập nhật pip bằng lệnh:
 ```
 C:\> activate tensorflow1
 
 (tensorflow1) C:\>python -m pip install --upgrade pip
 ```
-Install tensorflow-gpu in this environment by issuing:
+Cài đặt tensorflow-gpu tại môi trường này bằng lệnh:
 ```
 (tensorflow1) C:\> pip install --ignore-installed --upgrade tensorflow-gpu
 ```
 
-(Note: You can also use the CPU-only version of TensorFow, but it will run much slower. If you want to use the CPU-only version, just use "tensorflow" instead of "tensorflow-gpu" in the previous command.)
+(Lưu ý: Bạn có thể chỉ sử dụng phiên bản TensorFlow dành cho CPU, nhưng nó sẽ chạy chậm hơn nhiều. Nếu bạn muốn sử dụng phiên bản, thay thế "tensorflow" bởi "tensorflow-gpu" ở lệnh cài đặt phía trên.)
 
-Install the other necessary packages by issuing the following commands:
+Cài đặt các packages cần thiết khác bằng các lệnh dưới đây:
 ```
 (tensorflow1) C:\> conda install -c anaconda protobuf
 (tensorflow1) C:\> pip install pillow
@@ -143,49 +143,49 @@ Install the other necessary packages by issuing the following commands:
 (tensorflow1) C:\> pip install pandas
 (tensorflow1) C:\> pip install opencv-python
 ```
-(Note: The ‘pandas’ and ‘opencv-python’ packages are not needed by TensorFlow, but they are used in the Python scripts to generate TFRecords and to work with images, videos, and webcam feeds.)
+(Lưu ý: Thư viện ‘pandas’ và ‘opencv-python’ không cần thiết cho TensorFlow, nhưng chúng ta sẽ cần nó cho các Python scripts để tạo ra file TFRecords và làm việc với hình ảnh, video và đầu vào từ webcam.)
 
-#### 2e. Configure PYTHONPATH environment variable
-A PYTHONPATH variable must be created that points to the \models, \models\research, and \models\research\slim directories. Do this by issuing the following commands (from any directory):
+#### 2e. Cấu hình đường dẫn PYTHONPATH cho môi trường 
+Một đường dẫn PYTHONPATH thì cần phải được cấu hình như \models, \models\research, và \models\research\slim directories. Cấu hình nó bằng cách chạy lệnh dưới đây (từ bất kỳ thư mục nào):
 ```
 (tensorflow1) C:\> set PYTHONPATH=C:\tensorflow1\models;C:\tensorflow1\models\research;C:\tensorflow1\models\research\slim
 ```
-(Note: Every time the "tensorflow1" virtual environment is exited, the PYTHONPATH variable is reset and needs to be set up again. You can use "echo %PYTHONPATH% to see if it has been set or not.)
+(Lưu ý: Mỗi khi "tensorflow1" virtual environment bị tắt, thì biến PYTHONPATH cần phải được thiết lập lại. Bạn có thể chạy "echo %PYTHONPATH% để xem nó có cần thiết lập hay không.)
 
-#### 2f. Compile Protobufs and run setup.py
-Next, compile the Protobuf files, which are used by TensorFlow to configure model and training parameters. Unfortunately, the short protoc compilation command posted on TensorFlow’s Object Detection API [installation page](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md) does not work on Windows. Every  .proto file in the \object_detection\protos directory must be called out individually by the command.
+#### 2f. Biên dịch Protobufs và chạy setup.py
+Tiếp theo, biên dịch các file Protobuf, cái mà được sử dụng bởi TensorFlow để cấu hình model và các tham số huấn luyện. Không may rằng,  lệnh biên dịch protoc ngắn gọn được đăng tại TensorFlow’s Object Detection API [installation page](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md) không hoạt động trên Windows. Mỗi file .proto trong \object_detection\protos cần được biên dịch thủ công riêng bởi lệnh.
 
-In the Anaconda Command Prompt, change directories to the \models\research directory:
+Tại Anaconda Command Prompt, đổi đường dẫn thư mục tới thư mục \models\research:
 ```
 (tensorflow1) C:\> cd C:\tensorflow1\models\research
 ```
 
-Then copy and paste the following command into the command line and press Enter:
+Sau đó copy và paste các lệnh dưới đây vào command line sau đó nhấn Enter:
 ```
 protoc --python_out=. .\object_detection\protos\anchor_generator.proto .\object_detection\protos\argmax_matcher.proto .\object_detection\protos\bipartite_matcher.proto .\object_detection\protos\box_coder.proto .\object_detection\protos\box_predictor.proto .\object_detection\protos\eval.proto .\object_detection\protos\faster_rcnn.proto .\object_detection\protos\faster_rcnn_box_coder.proto .\object_detection\protos\grid_anchor_generator.proto .\object_detection\protos\hyperparams.proto .\object_detection\protos\image_resizer.proto .\object_detection\protos\input_reader.proto .\object_detection\protos\losses.proto .\object_detection\protos\matcher.proto .\object_detection\protos\mean_stddev_box_coder.proto .\object_detection\protos\model.proto .\object_detection\protos\optimizer.proto .\object_detection\protos\pipeline.proto .\object_detection\protos\post_processing.proto .\object_detection\protos\preprocessor.proto .\object_detection\protos\region_similarity_calculator.proto .\object_detection\protos\square_box_coder.proto .\object_detection\protos\ssd.proto .\object_detection\protos\ssd_anchor_generator.proto .\object_detection\protos\string_int_label_map.proto .\object_detection\protos\train.proto .\object_detection\protos\keypoint_box_coder.proto .\object_detection\protos\multiscale_anchor_generator.proto .\object_detection\protos\graph_rewriter.proto .\object_detection\protos\calibration.proto .\object_detection\protos\flexible_grid_anchor_generator.proto
 ```
-This creates a name_pb2.py file from every name.proto file in the \object_detection\protos folder.
+Việc này tạo một file name_pb2.pt từ mỗi file name.proto trong thư mục \object_detection\protos.
 
-**(Note: TensorFlow occassionally adds new .proto files to the \protos folder. If you get an error saying ImportError: cannot import name 'something_something_pb2' , you may need to update the protoc command to include the new .proto files.)**
+**(Lưu ý: TensorFlow thỉnh thoảng cập nhật các file .proto mới tại thư mục \protos. Nếu bạn gặp phải lỗi về ImportError: cannot import name 'something_something_pb2' , bạn có thể cần phải cập nhật các lệnh proto để thêm vào các file .proto mới.)**
 
-Finally, run the following commands from the C:\tensorflow1\models\research directory:
+Cuối cùng, chạy các lệnh sau từ thư mục C:\tensorflow1\models\research:
 ```
 (tensorflow1) C:\tensorflow1\models\research> python setup.py build
 (tensorflow1) C:\tensorflow1\models\research> python setup.py install
 ```
 
-#### 2g. Test TensorFlow setup to verify it works
-The TensorFlow Object Detection API is now all set up to use pre-trained models for object detection, or to train a new one. You can test it out and verify your installation is working by launching the object_detection_tutorial.ipynb script with Jupyter. From the \object_detection directory, issue this command:
+#### 2g. Kiểm tra thiết lập TensorFlow để đảm bảo nó hoạt động
+Phía trên là đầy đủ các cài đặt về TensorFlow Object Detection API để object detection, hoặc đào tạo một model mới. Bạn có thể kiểm thử nó để đảm bảo rằng các cài đặt hoạt động bằng cách chạy Jupyter notebook object_detection_tutorial.ipynb. Từ thư mục \object_detection, chạy lệnh sau:
 ```
 (tensorflow1) C:\tensorflow1\models\research\object_detection> jupyter notebook object_detection_tutorial.ipynb
 ```
-This opens the script in your default web browser and allows you to step through the code one section at a time. You can step through each section by clicking the “Run” button in the upper toolbar. The section is done running when the “In [ * ]” text next to the section populates with a number (e.g. “In [1]”). 
+Lệnh này sẽ mở notebook tại một cửa sổ mới trên trình duyệt web của bạn và cho phép bạn chạy từng lệnh một trong notebook. Bạn có thể chuyển tiếp giữa các cell code bằng việc click vào nút "Run" tại thanh công cụ phía trên. Hoặc bạn có thể chọn "Run All" đê chạy tất cả các cell code trong notebook.
 
-(Note: part of the script downloads the ssd_mobilenet_v1 model from GitHub, which is about 74MB. This means it will take some time to complete the section, so be patient.)
+(Lưu ý: có đoạn tải về ssd_mobilenet_v1 model từ GitHub, khoảng 74MB. Nên nó sẽ mất một chút thời gian để hoàn thành, hãy kiên nhẫn đợi)
 
-Once you have stepped all the way through the script, you should see two labeled images at the bottom section the page. If you see this, then everything is working properly! If not, the bottom section will report any errors encountered. See the [Appendix](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10#appendix-common-errors) for a list of errors I encountered while setting this up.
+Khi bạn đã chạy tất cả script trong notebook, bạn sẽ thấy hai hình ảnh đã được gán nhãn ở phần dưới cùng của trang. Nếu bạn thấy nó, tất cả đã hoạt động tốt! Nếu không, phần dưới cùng sẽ báo ra một số lỗi mà có thể gặp phải. Xem tại [Appendix](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10#appendix-common-errors) là một loạt các lỗi mà tôi gặp phải trong quá trình thiết lập.
 
-**Note: If you run the full Jupyter Notebook without getting any errors, but the labeled pictures still don't appear, try this: go in to object_detection/utils/visualization_utils.py and comment out the import statements around lines 29 and 30 that include matplotlib. Then, try re-running the Jupyter notebook.**
+**Lưu ý: Nếu bạn chạy toàn bộ Jupyter Notebook mà không gặp lỗi nào, nhưng hình ảnh có gán nhãn không hiện lên, thử cái này: đi đến thư mục object_detection/utils/visualization_utils.py và comment lại các dòng 29 và 30 nơi chứa matplotlib. Sau đó, chạy lại toàn bộ Jupyter notebook.**
 
 <p align="center">
   <img src="doc/jupyter_notebook_dogs.jpg">
