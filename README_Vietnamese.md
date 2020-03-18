@@ -197,7 +197,7 @@ Sau khi TensorFlow Object Detection API đã thiết lập thành công và sẵ
 #### 3a. Thu thập hình ảnh
 TensorFlow cần lượng lớn hình ảnh của một object để có thể đào tạo một detection classifier model tốt. Để đào tạo một bộ phân loại mạnh mẽ, các hình ảnh đào tạo cần có ngẫu nhiên các objects trong ảnh cùng với các objects mong muốn, và nên có đa dạng về nền và điều kiện ánh sáng khác nhau. Cần có một số hình ảnh mà trong đó object mong muốn bị che khuất một phần, chồng chéo với một thứ khác, hoặc chỉ ở giữa bức ảnh.
 
-Với Pinochle Card Detection classifier của tôi, tôi cso 6 objects khác nhau mà tôi muốn phát hiện (Thứ tự các quân bài chín, mười Ri, Q, K và Xì - Đây chỉ là thứ tự, tôi không nhận diện quân Xì). Tôi đã sử dụng iPhone để chụp 40 bức ảnh, với nhiều các vật thể không muốn cũng có trong ảnh. Sau đó, tôi chụp khoảng 100 bức khác cùng với đa dạng các quân bài cùng trong một bức ảnh. Tôi muốn phát hiện các thể khi chúng trùng lên nhau, vì vậy tôi chắc chắn rằng các thẻ có thể chồng lên nhau trong nhiều hình ảnh.
+Với Pinochle Card Detection classifier của tôi, tôi cso 6 objects khác nhau mà tôi muốn phát hiện (Thứ tự các quân bài chín, mười Ri, Q, K và Át - Đây chỉ là thứ tự, tôi không nhận diện quân Át). Tôi đã sử dụng iPhone để chụp 40 bức ảnh, với nhiều các vật thể không muốn cũng có trong ảnh. Sau đó, tôi chụp khoảng 100 bức khác cùng với đa dạng các quân bài cùng trong một bức ảnh. Tôi muốn phát hiện các thể khi chúng trùng lên nhau, vì vậy tôi chắc chắn rằng các thẻ có thể chồng lên nhau trong nhiều hình ảnh.
 
 <p align="center">
   <img src="doc/collage.jpg">
