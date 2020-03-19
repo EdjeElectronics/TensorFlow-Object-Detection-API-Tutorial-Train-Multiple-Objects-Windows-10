@@ -210,19 +210,19 @@ Bạn có thể sử dụng điện thoại của bạn để chụp các hình 
 Sau khi bạn có tất cả các hình ảnh bạn cần, chia chúng ra 20% đến thư mục \object_detection\images\test, và 80% còn lại vào thư mục \object_detection\images\train. Đảm bảo rằng có đa dạng hình ảnh trong cả hai thư mục \test và \train.
 
 #### 3b. Label Pictures
-Here comes the fun part! With all the pictures gathered, it’s time to label the desired objects in every picture. LabelImg is a great tool for labeling images, and its GitHub page has very clear instructions on how to install and use it.
+Chúng ta đến với phần thú vị rồi đây! Cùng với tất cả hình ảnh mà bạn đã thu thập, bây giờ là lúc gán nhãn cho các vật thể mà bạn muốn nhận diện trong mỗi bức ảnh. LabelImg là một công cụ tuyệt vời để làm việc này, và GitHub của có đầy đủ các hướng dẫn để cài đặt và sử dụng nó.
 
-[LabelImg GitHub link](https://github.com/tzutalin/labelImg)
+[Link Github của LabelImg](https://github.com/tzutalin/labelImg)
 
-[LabelImg download link](https://www.dropbox.com/s/tq7zfrcwl44vxan/windows_v1.6.0.zip?dl=1)
+[Link tải về LabelImg](https://www.dropbox.com/s/tq7zfrcwl44vxan/windows_v1.6.0.zip?dl=1)
 
-Download and install LabelImg, point it to your \images\train directory, and then draw a box around each object in each image. Repeat the process for all the images in the \images\test directory. This will take a while! 
+Tải xuống và cài đặt LabelImg, chuyển đường dẫn đến thư mục chứa ảnh đào tạo của bạn \images\train, và với mỗi ảnh vẽ một hình chữ nhật (box) bao quanh mỗi vật thể mà bạn muốn nhận dạng. Lặp lại quá trình này với tất cả các ảnh trong tập kiểm thử \images\test. Quá này này sẽ mất kha khá thời gian đấy! (**Lưu ý: Bạn hãy để định dạng là PascalVOC thay vì YOLO nhé!**)
 
 <p align="center">
   <img src="doc/labels.jpg">
 </p>
 
-LabelImg saves a .xml file containing the label data for each image. These .xml files will be used to generate TFRecords, which are one of the inputs to the TensorFlow trainer. Once you have labeled and saved each image, there will be one .xml file for each image in the \test and \train directories.
+LabelImg lưu một file .xml bao gồm nhãn cho mỗi ảnh. Mỗi file .xml sẽ được sử dụng để tạo ra các file TFRecords, cái sẽ là đầu vào cho bộ huấn luyện với TensorFlow. Khi bạn gán nhãn và lưu mỗi ảnh, sẽ có một file .xml cho mỗi ảnh trong thư mục \test và \train.
 
 ### 4. Generate Training Data
 With the images labeled, it’s time to generate the TFRecords that serve as input data to the TensorFlow training model. This tutorial uses the xml_to_csv.py and generate_tfrecord.py scripts from [Dat Tran’s Raccoon Detector dataset](https://github.com/datitran/raccoon_dataset), with some slight modifications to work with our directory structure.
