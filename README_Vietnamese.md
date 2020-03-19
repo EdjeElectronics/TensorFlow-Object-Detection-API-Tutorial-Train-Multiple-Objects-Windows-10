@@ -226,7 +226,7 @@ LabelImg lưu một file .xml bao gồm nhãn cho mỗi ảnh. Mỗi file .xml s
 
 ### 4. Generate Training Data
 With the images labeled, it’s time to generate the TFRecords that serve as input data to the TensorFlow training model. This tutorial uses the xml_to_csv.py and generate_tfrecord.py scripts from [Dat Tran’s Raccoon Detector dataset](https://github.com/datitran/raccoon_dataset), with some slight modifications to work with our directory structure.
-
+Cung
 First, the image .xml data will be used to create .csv files containing all the data for the train and test images. From the \object_detection folder, issue the following command in the Anaconda command prompt:
 ```
 (tensorflow1) C:\tensorflow1\models\research\object_detection> python xml_to_csv.py
