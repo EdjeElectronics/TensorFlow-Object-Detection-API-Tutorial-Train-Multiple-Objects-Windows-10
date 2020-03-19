@@ -225,17 +225,17 @@ Tải xuống và cài đặt LabelImg, chuyển đường dẫn đến thư m�
 LabelImg lưu một file .xml bao gồm nhãn cho mỗi ảnh. Mỗi file .xml sẽ được sử dụng để tạo ra các file TFRecords, cái sẽ là đầu vào cho bộ huấn luyện với TensorFlow. Khi bạn gán nhãn và lưu mỗi ảnh, sẽ có một file .xml cho mỗi ảnh trong thư mục \test và \train.
 
 ### 4. Generate Training Data
-With the images labeled, it’s time to generate the TFRecords that serve as input data to the TensorFlow training model. This tutorial uses the xml_to_csv.py and generate_tfrecord.py scripts from [Dat Tran’s Raccoon Detector dataset](https://github.com/datitran/raccoon_dataset), with some slight modifications to work with our directory structure.
-Cung
-First, the image .xml data will be used to create .csv files containing all the data for the train and test images. From the \object_detection folder, issue the following command in the Anaconda command prompt:
+Cùng với bộ dataset đã được gán nhãn, đây là lúc để tạo ra các file TFRecords cái mà sẽ làm đầu vào cho việc huấn luyện model với TensorFlow. Hướng dẫn này sử dụng file xml_to_csv.py và generate_tfrecord.py từ [Dat Tran’s Raccoon Detector dataset](https://github.com/datitran/raccoon_dataset), cùng với một số sử đổi nhỏ để có thể chạy được trong cấu trúc thư mục của chúng ta.
+
+Đầu tiên, các file ảnh và file .xml sẽ được sử dụng để tạo ra file .cvs bao gồm tất cả dữ liệu cho tập train và test. Từ thư mục \object_detection, ta chạy lệnh sau trong Anaconda Prompt:
 ```
 (tensorflow1) C:\tensorflow1\models\research\object_detection> python xml_to_csv.py
 ```
-This creates a train_labels.csv and test_labels.csv file in the \object_detection\images folder. 
+Kết thúc lệnh các file train_labels.csv và test_labels.csv sẽ được tạo ra tại thư mục \object_detection\images.
 
-Next, open the generate_tfrecord.py file in a text editor. Replace the label map starting at line 31 with your own label map, where each object is assigned an ID number. This same number assignment will be used when configuring the labelmap.pbtxt file in Step 5b. 
+Tiếp theo, mở file generate_tfrecord.py trong một Text Editor. Thay thế các nhãn tại dòng thứ 31 bằng các nhãn của bạn, trong đó mỗi đối tượng được gán một ID. Việc đánh số thứ tự sẽ được sử dụng khi cấu hình file the labelmap.pbtxt tại Bước 5b.
 
-For example, say you are training a classifier to detect basketballs, shirts, and shoes. You will replace the following code in generate_tfrecord.py:
+Ví dụ, bạn đang đào tạo một bộ phân loại để phát hiện bóng rổ, áo sơ-mi và giày. Bạn sẽ cần thay thế code trong file generate_tfrecord.py:
 ```
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
@@ -254,7 +254,7 @@ def class_text_to_int(row_label):
     else:
         None
 ```
-With this:
+Thành:
 ```
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
@@ -267,12 +267,12 @@ def class_text_to_int(row_label):
     else:
         None
 ```
-Then, generate the TFRecord files by issuing these commands from the \object_detection folder:
+Sau đó, tạo các file TFRecord bằng cách sử dụng lệnh dưới đây tại thư mục \object_detection:
 ```
 python generate_tfrecord.py --csv_input=images\train_labels.csv --image_dir=images\train --output_path=train.record
 python generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=images\test --output_path=test.record
 ```
-These generate a train.record and a test.record file in \object_detection. These will be used to train the new object detection classifier.
+Các file train.record và a test.record sẽ được tạo ra tại thư mục \object_detection. Chúng sẽ được sử dụng để đào tạo một bộ phân loại vật thể mới.
 
 ### 5. Create Label Map and Configure Training
 The last thing to do before training is to create a label map and edit the training configuration file.
