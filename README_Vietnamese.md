@@ -329,27 +329,27 @@ item {
 ```
 
 #### 5b. Configure training
-Finally, the object detection training pipeline must be configured. It defines which model and what parameters will be used for training. This is the last step before running training!
+Cuối cùng, quá trình đạo tạo bộ phát hiện vật thể cần được thiết lập. Nó thì định nghĩa cho model biết những tham số nào sẽ được sử dụng trong quá trình đào tạo. Đây là bước cuối cùng trước khi tiến hành chạy đào tạo!
 
-Navigate to C:\tensorflow1\models\research\object_detection\samples\configs and copy the faster_rcnn_inception_v2_pets.config file into the \object_detection\training directory. Then, open the file with a text editor. There are several changes to make to the .config file, mainly changing the number of classes and examples, and adding the file paths to the training data.
+Chuyển đến thư mục C:\tensorflow1\models\research\object_detection\samples\configs và sao chép file faster_rcnn_inception_v2_pets.config đến thư mục \object_detection\training. Sau đó, mở file này trong một Text Editor. Cần một số thay đổi trong file .config, ví dụ cần phải thay đổi số lượng, và thêm đường dẫn đến thư mục chứa dataset.
 
-Make the following changes to the faster_rcnn_inception_v2_pets.config file. Note: The paths must be entered with single forward slashes (NOT backslashes), or TensorFlow will give a file path error when trying to train the model! Also, the paths must be in double quotation marks ( " ), not single quotation marks ( ' ).
+Tiến hành các thay đổi với file faster_rcnn_inception_v2_pets.config file theo hướng dẫn dưới đây. Lưu ý: Đường dẫn cần phải được nhập bằng dấu gạch chéo đơn (/) (KHÔNG phải dấu gạch chéo ngược (\)), dẫn đến TensorFlow sẽ có thể sinh ra lỗi với đường dẫn file! Ngoài ra, các đường dẫn phải được để trong dấu ngoặc kép ("), không phải là dấu ngoặc kép đơn (').
 
-- Line 9. Change num_classes to the number of different objects you want the classifier to detect. For the above basketball, shirt, and shoe detector, it would be num_classes : 3 .
-- Line 106. Change fine_tune_checkpoint to:
+- Dòng 9. Thay đổi num_classes thành số lượng objects mà bạn muốn phát hiện. Ví dụ trên với bộ phát hiện bóng rổ, áo sơ-mi, và giày thì num_classes bằng: 3.
+- Line 106. Thay đổi fine_tune_checkpoint thành:
   - fine_tune_checkpoint : "C:/tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
 
-- Lines 123 and 125. In the train_input_reader section, change input_path and label_map_path to:
+- Lines 123 và 125. Trong mục train_input_reader, thay đổi input_path và label_map_path thành:
   - input_path : "C:/tensorflow1/models/research/object_detection/train.record"
   - label_map_path: "C:/tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
 
-- Line 130. Change num_examples to the number of images you have in the \images\test directory.
+- Line 130. Thay đổi num_examples thành số lượng ảnh test bạn có trong thư mục \images\test directory.
 
-- Lines 135 and 137. In the eval_input_reader section, change input_path and label_map_path to:
+- Lines 135 và 137. Trong mục eval_input_reader, thay đổi input_path and label_map_path thành:
   - input_path : "C:/tensorflow1/models/research/object_detection/test.record"
   - label_map_path: "C:/tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
 
-Save the file after the changes have been made. That’s it! The training job is all configured and ready to go!
+Lưu lại các file sau khi đã thay đổi. Vậy là xong! Cấu hình đào tạo đã sẵn sàng để chạy huấn luyện model!
 
 ### 6. Run the Training
 **UPDATE 9/26/18:** 
