@@ -274,11 +274,11 @@ python generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=image
 ```
 Các file train.record và a test.record sẽ được tạo ra tại thư mục \object_detection. Chúng sẽ được sử dụng để đào tạo một bộ phân loại vật thể mới.
 
-### 5. Create Label Map and Configure Training
-The last thing to do before training is to create a label map and edit the training configuration file.
+### 5. Tạo Label Map và cấu hình đào tạo
+Điều cuối cùng cần chuẩn bị trước khi đi vào huấn luyện model là tạo một file định nghĩa các nhãn (Label Map) và cấu hình file đào tạo.
 
-#### 5a. Label map
-The label map tells the trainer what each object is by defining a mapping of class names to class ID numbers. Use a text editor to create a new file and save it as labelmap.pbtxt in the C:\tensorflow1\models\research\object_detection\training folder. (Make sure the file type is .pbtxt, not .txt !) In the text editor, copy or type in the label map in the format below (the example below is the label map for my Pinochle Deck Card Detector):
+#### 5a. Định nghĩa các nhãn
+Label Map thì nói với bộ huấn luyện rằng tên mỗi vật thể được ánh xạ tương ứng với số ID. Sử dụng một Text Eidtor để tạo một file mới và lưu nó lại như là labelmap.pbtxt trong thư mục C:\tensorflow1\models\research\object_detection\training. (Đảm bảo rằng đuôi file là .pbtxt chứ không phải .txt !) Trong Text Editor, chỉnh sửa file Label Map theo format dưới đây (Ví dụ dưới đây là Label Map của bộ nhận diện các quân bài Pinochle):
 ```
 item {
   id: 1
@@ -310,7 +310,7 @@ item {
   name: 'ace'
 }
 ```
-The label map ID numbers should be the same as what is defined in the generate_tfrecord.py file. For the basketball, shirt, and shoe detector example mentioned in Step 4, the labelmap.pbtxt file will look like:
+Số ID trong Label Map phải giống với số đã được định nghĩa trong file generate_tfrecord.py. Ví dự với bộ phát hiện bóng rổ, áo sơ-mi, và giày được đề cập trong Bước 4, file labelmap.pbtxt sẽ trông như thế này:
 ```
 item {
   id: 1
