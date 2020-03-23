@@ -353,38 +353,39 @@ Lưu lại các file sau khi đã thay đổi. Vậy là xong! Cấu hình đào
 
 ### 6. Chạy quá trình đào tạo
 **CẬP NHẬT 9/26/18:** 
-*As of version 1.9, TensorFlow has deprecated the "train.py" file and replaced it with "model_main.py" file. I haven't been able to get model_main.py to work correctly yet (I run in to errors related to pycocotools). Fortunately, the train.py file is still available in the /object_detection/legacy folder. Simply move train.py from /object_detection/legacy into the /object_detection folder and then continue following the steps below.*
+*Ở phiên bản 1.9, TensorFlow đã thay thế file "train.py" bằng file "model_main.py". Tôi chưa tìm ra cách đê file model_main.py hoạt động chính xác (Tôi chạy và nó xảy ra lỗi). May mắn thay, file train.pt vẫn còn ở trong thư mục /object_detection/legacy. Đơn giản chỉ cần di chuyên file train.py từ thư mục /object_detection/legacy đến thư mục /object_detection và tiếp thục thực hiện theo các bước dưới đây*
 
-Here we go! From the \object_detection directory, issue the following command to begin training:
+Nào chúng ta bắt đầu! Chuyển đến đường dẫn \object_detection, sau đó gõ lệnh sau để bắt đầu training:
+
 ```
 python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
 ```
-If everything has been set up correctly, TensorFlow will initialize the training. The initialization can take up to 30 seconds before the actual training begins. When training begins, it will look like this:
+Nếu mọi thứ đã được thiết lập đúng, TensorFLow sẽ khởi tạo quá trình đào tạo. Việc khởi tạo này cần khoảng 30 trước khi bắt đầu đào tạo. Khi quá trình đào tạo bắt đầu, nó sẽ trông như thế này:
 
 <p align="center">
   <img src="doc/training.jpg">
 </p>
 
-Each step of training reports the loss. It will start high and get lower and lower as training progresses. For my training on the Faster-RCNN-Inception-V2 model, it started at about 3.0 and quickly dropped below 0.8. I recommend allowing your model to train until the loss consistently drops below 0.05, which will take about 40,000 steps, or about 2 hours (depending on how powerful your CPU and GPU are). Note: The loss numbers will be different if a different model is used. MobileNet-SSD starts with a loss of about 20, and should be trained until the loss is consistently under 2.
+Sau mỗi bước đào tạo, hàm loss sẽ được tính ra. Nó sẽ bắt đầu với giá trị cao và giảm dần trong suốt quá trình đào tạo. Với việc đào tạo model Faster-RCNN-Inception-V2 của tôi, nó bắt đầu vào khoảng 3.0 và nhanh chóng giảm xuống dưới 0.8. Tôi khuyên bạn nên đào tạo đến khi hàm loss giảm xuống dưới 0.05, việc này cần đến 40,000 bước, hoặc 2 giờ (phụ thuộc vào cấu hình CPU và GPU của bạn). Lưu ý: Hàm mất mát sẽ khác với các model khác nhau được sử dụng. MobileNet-SSD bắt đầu với hàm loss khoảng 20, và cần được đào tạo cho đến khi giảm xuống dưới 2.
 
-You can view the progress of the training job by using TensorBoard. To do this, open a new instance of Anaconda Prompt, activate the tensorflow1 virtual environment, change to the C:\tensorflow1\models\research\object_detection directory, and issue the following command:
+Bạn có thể thấy quá trình của việc đào tạo bằng việc sử dụng TensorBoard. Để làm được điều này, mở một terminal mới của Anaconda Prompt, kích hoạt môi trường tensorflow1, chuyển đường dẫn đến thư mục C:\tensorflow1\models\research\object_detection, sau đó chạy lệnh dưới đây:
 ```
 (tensorflow1) C:\tensorflow1\models\research\object_detection>tensorboard --logdir=training
 ```
-This will create a webpage on your local machine at YourPCName:6006, which can be viewed through a web browser. The TensorBoard page provides information and graphs that show how the training is progressing. One important graph is the Loss graph, which shows the overall loss of the classifier over time.
+Lệnh này sẽ tạo ra một trang web trên máy cục bộ của bạn tại YourPCName:6006, ta có thể xem nó qua trình duyệt web. Trang TensorBoard cung cấp thông tin và biểu đồ về quá trình đào tạo. Một trong những biểu đồ quan trọng là biểu đồ Loss, cái mà minh họa cho tổng giá trị mất mát của bộ phân loại theo thời gian.
 
 <p align="center">
   <img src="doc/loss_graph.JPG">
 </p>
 
-The training routine periodically saves checkpoints about every five minutes. You can terminate the training by pressing Ctrl+C while in the command prompt window. I typically wait until just after a checkpoint has been saved to terminate the training. You can terminate training and start it later, and it will restart from the last saved checkpoint. The checkpoint at the highest number of steps will be used to generate the frozen inference graph.
+Trong quá trình đào tạo các checkpoints sẽ được lưu lại sau mỗi 5 phút. Bạn có thể kết thúc quá trìnhd đào tạo bằng cách ấn Ctrl+C trong cửa sổ terminal. Tôi thường đợi sau khi một checkpint đã được lưu sau đó mới dừng đào tạo. Bạn có thể kết thúc và bắt đầu đào tạo lại tiếp, và nó sẽ bắt đầu từ cái checkpoint gần nhất được lưu lại. Checkpoint tại bước đào tạo lớn nhất sẽ được dùng để tạo ra Inference Graph (model). 
 
-### 7. Export Inference Graph
-Now that training is complete, the last step is to generate the frozen inference graph (.pb file). From the \object_detection folder, issue the following command, where “XXXX” in “model.ckpt-XXXX” should be replaced with the highest-numbered .ckpt file in the training folder:
+### 7. Tạo Inference Graph
+Bây giờ quá trình đào tạo đã hoàn tất, bước cuối cùng là tạo ra inference graph (.pb file). Từ thư mục \object_detection, chạy lệnh dưới đây, với “XXXX” trong “model.ckpt-XXXX” bằng giá trị trong tệp .ckpt được đánh số cao nhât trong thư mục đào tạo:
 ```
 python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix training/model.ckpt-XXXX --output_directory inference_graph
 ```
-This creates a frozen_inference_graph.pb file in the \object_detection\inference_graph folder. The .pb file contains the object detection classifier.
+Lệnh này sẽ tạo một file frozen_inference_graph.pb trong thư mục \object_detection\inference_graph. File .pb chứa model phát hiện phân loại đối tượng.
 
 ### 8. Use Your Newly Trained Object Detection Classifier!
 The object detection classifier is all ready to go! I’ve written Python scripts to test it out on an image, video, or webcam feed.
