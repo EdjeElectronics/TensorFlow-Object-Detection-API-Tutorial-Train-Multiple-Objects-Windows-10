@@ -405,15 +405,16 @@ Nếu mọi thứ hoạt động bình thường, trình phát hiện đối tư
 Nếu bạn gặp lỗi, vui lòng kiểm tra Phụ lục: tại đây chứa một danh sách các lỗi và tôi gặp trong quá trình thiết lập bộ phát hiện và phân loại đối tượng của mình. Bạn cũng có thể thử tìm kiếm trên Google về lỗi bạn gặp phải. Thường có những thông tin hữu ích trên Stack Exchange hoặc các vấn đề với TensorFlow trên GitHub.
 
 ## Phụ lục: Các lỗi thường gặp
-It appears that the TensorFlow Object Detection API was developed on a Linux-based operating system, and most of the directions given by the documentation are for a Linux OS. Trying to get a Linux-developed software library to work on Windows can be challenging. There are many little snags that I ran in to while trying to set up tensorflow-gpu to train an object detection classifier on Windows 10. This Appendix is a list of errors I ran in to, and their resolutions.
+Dường như TensorFlow Object Detection API được phát triển trên hệ điều hành Linux và hầu hết tài liệu hướng dẫn đều dành cho hệ điều hành Linux. Việc cố gắng đê các thư viện được phát triển cho Linux hoạt động được trên Windows là một thách thức. Có rất nhiều vấn đề mà tôi gặp phải khi phải cố gắng thiết lập tensorflow-gpu để đào tạo một trình phát hiện và phân loại đối tượng trên Windows 10. Phụ lục này là danh sách các lỗi mà tôi gặp phải và hướng khắc phục chúng.
+
 
 #### 1. ModuleNotFoundError: No module named 'deployment' or No module named 'nets'
 
-This error occurs when you try to run object_detection_tutorial.ipynb or train.py and you don’t have the PATH and PYTHONPATH environment variables set up correctly. Exit the virtual environment by closing and re-opening the Anaconda Prompt window. Then, issue “activate tensorflow1” to re-enter the environment, and then issue the commands given in Step 2e. 
+Lỗi này gặp phải khi bạn cố gắng chạy file object_detection_tutorial.ipynb hoặc train.py khi bạn chưa thiết lập các biến môi trường PATH và PYTHONPATH một cách chính xác. Thoát khỏi môi trường ảnh bằng cách đóng và mở lại cửa sổ Anaconda Prompt. Sau đó, thực hiện “activate tensorflow1” để mở lại môi trường, bằng cách thực hiện các lệnh đã được hướng dẫn ở bước Step 2e.  
 
-You can use “echo %PATH%” and “echo %PYTHONPATH%” to check the environment variables and make sure they are set up correctly.
+Bạn có thể sử dụng “echo %PATH%” và “echo %PYTHONPATH%” để kiểm tra các biến môi trường và đảm bảo mọi thứ đã được thiết lập đúng.
 
-Also, make sure you have run these commands from the \models\research directory:
+Ngoài ra, đảm bảo bạn đã chạy các lệnh với đường dẫn là \models\research:
 ```
 setup.py build
 setup.py install
@@ -423,34 +424,35 @@ setup.py install
 
 #### ImportError: cannot import name 'string_int_label_map_pb2'
 
-#### (or similar errors with other pb2 files)
+#### (hoặc lỗi tương tự với các file pb2 khác)
 
-This occurs when the protobuf files (in this case, preprocessor.proto) have not been compiled. Re-run the protoc command given in Step 2f. Check the \object_detection\protos folder to make sure there is a name_pb2.py file for every name.proto file.
+Lỗi này xảy ra khi các file (trong trường hợp này, preprocessor.proto) chưa được biên dịch. Chạy lại lệnh protoc theo chỉ dẫn ở Bước 2f. Kiểm tra thư mục \object_detection\protos để đảm bảo rằng mỗi file name_pb2.py sẽ có một file name.proto tương ứng.
+
 
 #### 3. object_detection/protos/.proto: No such file or directory
 
-This occurs when you try to run the
+Lỗi này xảy ra khi bạn cố gắng chạy lệnh:
 ```
 “protoc object_detection/protos/*.proto --python_out=.”
 ```
-command given on the TensorFlow Object Detection API installation page. Sorry, it doesn’t work on Windows! Copy and paste the full command given in Step 2f instead. There’s probably a more graceful way to do it, but I don’t know what it is.
+Lệnh này được đưa ra trên trang cài đặt TensorFlow Object Detection API. Rất tiếc, nó không hoạt động trên Windows! Thay vào đó copy và paste tất các các lệnh được đưa trong Bước 2f. Có thể có cách đơn giản hơn để làm việc này, nhưng tôi chưa tìm ra lệnh đó là gì.
 
-#### 4. Unsuccessful TensorSliceReader constructor: Failed to get "file path" … The filename, directory name, or volume label syntax is incorrect.
+#### 4. Unsuccessful TensorSliceReader constructor: Failed to get "file path" … Tên tệp, tên thư mục, hoặc số lượng nhãn không chính xác.
   
-This error occurs when the filepaths in the training configuration file (faster_rcnn_inception_v2_pets.config or similar) have not been entered with backslashes instead of forward slashes. Open the .config file and make sure all file paths are given in the following format:
+Lỗi này xảy ra khi đường dẫn trong file cấu hình hình đào tạo (faster_rcnn_inception_v2_pets.config hoặc tương tự) chư được nhập bằng dấu gạch chéo ngược thay vì dấu gạch chéo xuôi. Mở file .config và đảm bảo rằng tất cả các đường dẫn tuân theo định dạng sau:
 ```
 “C:/path/to/model.file”
 ```
 
 #### 5. ValueError: Tried to convert 't' to a tensor and failed. Error: Argument must be a dense tensor: range(0, 3) - got shape [3], but wanted [].
 
-The issue is with models/research/object_detection/utils/learning_schedules.py Currently it is
+Vấn đề với models/research/object_detection/utils/learning_schedules.py hiện tại nó là
 ```
 rate_index = tf.reduce_max(tf.where(tf.greater_equal(global_step, boundaries),
                                       range(num_boundaries),
                                       [0] * num_boundaries))
 ```
-Wrap list() around the range() like this:
+Sửa lại list() xung quanh range() giống như thế này:
 
 ```
 rate_index = tf.reduce_max(tf.where(tf.greater_equal(global_step, boundaries),
@@ -461,15 +463,15 @@ rate_index = tf.reduce_max(tf.where(tf.greater_equal(global_step, boundaries),
 [Ref: Tensorflow Issue#3705](https://github.com/tensorflow/models/issues/3705#issuecomment-375563179)
 
 #### 6. ImportError: DLL load failed: The specified procedure could not be found.   (or other DLL-related errors)
-This error occurs because the CUDA and cuDNN versions you have installed are not compatible with the version of TensorFlow you are using. The easiest way to resolve this error is to use Anaconda's cudatoolkit package rather than manually installing CUDA and cuDNN. If you ran into these errors, try creating a new Anaconda virtual environment:
+Lỗi này xảy ra do các phiên bản CUDA và cuDNN bạn cài đặt không tương thích với phiên bản TensorFLow bạn đang sử dụng. Cách dễ nhất để khắc phục lỗi này là sử dụng các gói cudatookit của Anaconda thay vì cài đặt thủ công CUDA và cuDNN. Nếu bạn gặp phải lỗi này, hãy thử tạo một Anaconda virtual environment mới:
 ```
 conda create -n tensorflow2 pip python=3.5
 ```
-Then, once inside the environment, install TensorFlow using CONDA rather than PIP:
+Sau đó, khi đã kích hoạt môi trường, cài đặt TensorFlow sử dụng CONDA thay vì PIP:
 ```
 conda install tensorflow-gpu
 ```
-Then restart this guide from Step 2 (but you can skip the part where you install TensorFlow in Step 2d).
+Sau đó, thực hiện lại hướng dẫn này từ Bước 2 ( nhưng bạn có thể bỏ qua việc cài đặt TensorFlow tại Bước 2d).
 
-#### 7. In Step 2g, the Jupyter Notebook runs all the way through with no errors, but no pictures are displayed at the end.
-If you run the full Jupyter Notebook without getting any errors, but the labeled pictures still don't appear, try this: go in to object_detection/utils/visualization_utils.py and comment out the import statements around lines 29 and 30 that include matplotlib. Then, try re-running the Jupyter notebook. (The visualization_utils.py script changes quite a bit, so it might not be exactly line 29 and 30.)
+#### 7. Tại Bước 2g, Jupyter Notebook chạy mà không xảy ra lỗi, nhưng không có hình ảnh nào được hiển thị vào cuối cùng.
+Nếu bạn chạy Jupyter Notebook mà không gặp bất kì lỗi nào, nhưng các hình ảnh được gán nhãn vấn không xuất hiện, thử cách sau: truy cập file object_detection/utils/visualization_utils.py và comment các câu lệnh tại dòng 29 và 30 cái mà bao gồm matplotlib. Sau đó, thử chạy lại Jupyter notebook. ( File visualization_utils.py được thay đổi khá nhiều, do đó nó có thể không chính xác tại dòng 29 và 30.)
