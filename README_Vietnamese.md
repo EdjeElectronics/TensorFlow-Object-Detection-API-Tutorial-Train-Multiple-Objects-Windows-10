@@ -387,24 +387,24 @@ python export_inference_graph.py --input_type image_tensor --pipeline_config_pat
 ```
 Lệnh này sẽ tạo một file frozen_inference_graph.pb trong thư mục \object_detection\inference_graph. File .pb chứa model phát hiện phân loại đối tượng.
 
-### 8. Use Your Newly Trained Object Detection Classifier!
-The object detection classifier is all ready to go! I’ve written Python scripts to test it out on an image, video, or webcam feed.
+### 8. Sử dụng Object Detection Classifier mới vừa được đào tạo!
+Object Detection Classifier đã sẵn sàng để chạy! Tôi đã viết một file Python để test nó trên một ảnh, video hoặc đầu vào từ webcam.
 
-Before running the Python scripts, you need to modify the NUM_CLASSES variable in the script to equal the number of classes you want to detect. (For my Pinochle Card Detector, there are six cards I want to detect, so NUM_CLASSES = 6.)
+Trước khi chạy file Python, bạn cần chỉnh lại biến NUM_CLASSES bằng với số lượng class mà bạn muốn nhận diện. (Với bộ nhận diện quân bài Pinochle, vì có 6 quân bài tôi muốn nhận diện, nên NUM_CLASSES = 6.)
 
-To test your object detector, move a picture of the object or objects into the \object_detection folder, and change the IMAGE_NAME variable in the Object_detection_image.py to match the file name of the picture. Alternatively, you can use a video of the objects (using Object_detection_video.py), or just plug in a USB webcam and point it at the objects (using Object_detection_webcam.py).
+Để test bộ phát hiện vật thể của bạn, di chuyển hình ảnh chứa vật thể đó đến thư mục \object_detection, và thay đổi đường dẫn ảnh IMAGE_NAME trong file Object_detection_image.py bằng đường dẫn hình ảnh của bạn. Ngoài ra, bạn có thể sử dụng video chứa vật thể (sử dụng file Object_detection_video.py), hoặc chỉ cần cắm USB webcam và hướng nó vào nơi chứa vật thể (sử dụng Object_detection_webcam.py). 
 
-To run any of the scripts, type “idle” in the Anaconda Command Prompt (with the “tensorflow1” virtual environment activated) and press ENTER. This will open IDLE, and from there, you can open any of the scripts and run them.
+Để chạy bất kì một file test nào, gõ "idle" trong Anaconda Command Prompt (cùng với môi trường ảo “tensorflow1” đã được kích hoạt) và nhấn ENTER. Việc này sẽ mở IDLE, và từ đây, bạn có thể mở bất kỳ các kịch bản test nào và chạy chúng.
 
-If everything is working properly, the object detector will initialize for about 10 seconds and then display a window showing any objects it’s detected in the image!
+Nếu mọi thứ hoạt động bình thường, trình phát hiện đối tượng sẽ được khởi tạo trong khoảng 10 giây và sau đó hiện thỉ một cửa sổ với box của vật thể đã phát hiện được trong ảnh!
 
 <p align="center">
   <img src="doc/detector2.jpg">
 </p>
 
-If you encounter errors, please check out the Appendix: it has a list of errors that I ran in to while setting up my object detection classifier. You can also trying Googling the error. There is usually useful information on Stack Exchange or in TensorFlow’s Issues on GitHub.
+Nếu bạn gặp lỗi, vui lòng kiểm tra Phụ lục: tại đây chứa một danh sách các lỗi và tôi gặp trong quá trình thiết lập bộ phát hiện và phân loại đối tượng của mình. Bạn cũng có thể thử tìm kiếm trên Google về lỗi bạn gặp phải. Thường có những thông tin hữu ích trên Stack Exchange hoặc các vấn đề với TensorFlow trên GitHub.
 
-## Appendix: Common Errors
+## Phụ lục: Các lỗi thường gặp
 It appears that the TensorFlow Object Detection API was developed on a Linux-based operating system, and most of the directions given by the documentation are for a Linux OS. Trying to get a Linux-developed software library to work on Windows can be challenging. There are many little snags that I ran in to while trying to set up tensorflow-gpu to train an object detection classifier on Windows 10. This Appendix is a list of errors I ran in to, and their resolutions.
 
 #### 1. ModuleNotFoundError: No module named 'deployment' or No module named 'nets'
