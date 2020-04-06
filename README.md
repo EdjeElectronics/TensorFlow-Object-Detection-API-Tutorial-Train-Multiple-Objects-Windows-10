@@ -345,7 +345,7 @@ Make the following changes to the faster_rcnn_inception_v2_pets.config file. Not
 
 - Line 130. Change num_examples to the number of images you have in the \images\test directory.
 
-- Lines 135 and 137. In the eval_input_reader section, change input_path and label_map_path to:
+- Lines 140 and 142. In the eval_input_reader section, change input_path and label_map_path to:
   - input_path : "C:/tensorflow1/models/research/object_detection/test.record"
   - label_map_path: "C:/tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
 
