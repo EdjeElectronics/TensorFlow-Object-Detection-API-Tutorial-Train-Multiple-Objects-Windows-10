@@ -90,6 +90,16 @@ num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 # Open video file
 video = cv2.VideoCapture(PATH_TO_VIDEO)
 
+# PropIds of the video frame required to save the video
+frame_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+# FourCC Codec to identify the data format of the video file
+fourcc = cv2.VideoWriter_fourcc(*"XVID")
+
+# Save the video file to .mp4 using cv2.VideoWriter() class which takes 5 arguments viz. filename, fourcc code, fps and size of the window 
+saved_video = cv2.VideoWriter("object_detector.mp4", fourcc, 20.0, (frame_width, frame_height))
+
 while(video.isOpened()):
 
     # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
@@ -116,11 +126,15 @@ while(video.isOpened()):
 
     # All the results have been drawn on the frame, so it's time to display it.
     cv2.imshow('Object detector', frame)
-
+    
+    # Save the results
+    saved_video.write(frame)
+   
     # Press 'q' to quit
     if cv2.waitKey(1) == ord('q'):
         break
 
 # Clean up
 video.release()
+saved_video.release()
 cv2.destroyAllWindows()
