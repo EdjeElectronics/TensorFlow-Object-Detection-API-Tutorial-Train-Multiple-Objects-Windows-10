@@ -46,7 +46,7 @@ Anaconda is a software toolkit that creates virtual Python environments so you c
 
 Download Anaconda for Windows from [their webpage](https://www.anaconda.com/products/individual) (you have to scroll down a ways to get to the download links). Once it's downloaded, execute the installer file and work through the installation steps.
 
-If you are using a version of TensorFlow older than TF v1.13, make sure you use the CUDA and cuDNN versions that are compatible with the TensorFlow version you are using. [Here](https://www.tensorflow.org/install/source#tested_build_configurations) is a table showing which version of TensorFlow requires which versions of CUDA and cuDNN. Note that Anaconda will automatically install the correct version of CUDA and cuDNN for the version of TensorFlow you are using, so you shouldn't have to worry about this.
+If you are using a version of TensorFlow older than TF v1.13, make sure you use the CUDA and cuDNN versions that are compatible with the TensorFlow version you are using. [Here](https://www.tensorflow.org/install/source#tested_build_configurations) is a table showing which version of TensorFlow requires which versions of CUDA and cuDNN. Anaconda will automatically install the correct version of CUDA and cuDNN for the version of TensorFlow you are using, so you shouldn't have to worry about this.
 
 ### 2. Set up TensorFlow Directory and Anaconda Virtual Environment
 The TensorFlow Object Detection API requires using the specific directory structure provided in its GitHub repository. It also requires several additional Python packages, specific additions to the PATH and PYTHONPATH variables, and a few extra setup commands to get everything set up to run or train an object detection model. 
