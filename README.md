@@ -42,13 +42,11 @@ TensorFlow-GPU allows your PC to use the video card to provide extra processing 
 
 ## Steps
 ### 1. Install Anaconda, CUDA, and cuDNN
-Follow [this YouTube video by Mark Jay](https://www.youtube.com/watch?v=RplXYjxgZbw), which shows the process for installing Anaconda, CUDA, and cuDNN. You do not need to actually install TensorFlow as shown in the video, because we will do that later in Step 2. The video is made for TensorFlow-GPU v1.4, so download and install the CUDA and cuDNN versions for the latest TensorFlow version, rather than CUDA v8.0 and cuDNN v6.0 as instructed in the video. The [TensorFlow website](https://www.tensorflow.org/install/gpu) indicates which versions of CUDA and cuDNN are needed for the latest version of TensorFlow. 
+Anaconda is a software toolkit that creates virtual Python environments so you can install and use Python libraries without worrying about creating version conflicts with existing installations. Anaconda works well on Windows, and enables you to use many Python libraries that normally would only work on a Linux system. It provides a simple method for installing TensorFlow (which we'll do in Step 2d). It also automatically installs the CUDA and cuDNN versions you need for using TensorFlow on a GPU.
 
-If you are using an older version of TensorFlow, make sure you use the CUDA and cuDNN versions that are compatible with the TensorFlow version you are using. [Here](https://www.tensorflow.org/install/source#tested_build_configurations) is a table showing which version of TensorFlow requires which versions of CUDA and cuDNN.
+Download Anaconda for Windows from [their webpage](https://www.anaconda.com/products/individual) (you have to scroll down a ways to get to the download links). Once it's downloaded, execute the installer file and work through the installation steps.
 
-Be sure to install [Anaconda](https://www.anaconda.com/distribution/#download-section) as instructed in the video, because the Anaconda virtual environment will be used for the rest of this tutorial. (Note: The current version of Anaconda uses Python 3.7, which is not officially supported by TensorFlow. However, when creating an Anaconda virtual environment during Step 2d of this tutorial, we will tell it to use Python 3.5.)
-
-Visit [TensorFlow's website](https://www.tensorflow.org/install) for further installation details, including how to install it on other operating systems (like Linux). The [object detection repository](https://github.com/tensorflow/models/tree/master/research/object_detection) itself also has [installation instructions](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md).
+If you are using a version of TensorFlow older than TF v1.13, make sure you use the CUDA and cuDNN versions that are compatible with the TensorFlow version you are using. [Here](https://www.tensorflow.org/install/source#tested_build_configurations) is a table showing which version of TensorFlow requires which versions of CUDA and cuDNN. Note that Anaconda will automatically install the correct version of CUDA and cuDNN for the version of TensorFlow you are using, so you shouldn't have to worry about this.
 
 ### 2. Set up TensorFlow Directory and Anaconda Virtual Environment
 The TensorFlow Object Detection API requires using the specific directory structure provided in its GitHub repository. It also requires several additional Python packages, specific additions to the PATH and PYTHONPATH variables, and a few extra setup commands to get everything set up to run or train an object detection model. 
@@ -128,6 +126,8 @@ Install tensorflow-gpu in this environment by issuing:
 ```
 (tensorflow1) C:\> pip install --ignore-installed --upgrade tensorflow-gpu
 ```
+
+Since we're using Anaconda, installing tensorflow-gpu will also automatically download and install the correct versions of CUDA and cuDNN.
 
 (Note: You can also use the CPU-only version of TensorFow, but it will run much slower. If you want to use the CPU-only version, just use "tensorflow" instead of "tensorflow-gpu" in the previous command.)
 
