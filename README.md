@@ -8,6 +8,7 @@ This repository is a tutorial for how to use TensorFlow's Object Detection API t
 Translated versions of this guide are listed below. If you would like to contribute a translation in another language, please feel free! You can add it as a pull request and I will merge it when I get the chance.
 * [Korean translation](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10/blob/master/translate/README_Korean.md) (thanks @cocopambag!)
 * [Chinese translation](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10/blob/master/translate/README_Chinese.md) (thanks @Marco-Ray!)
+* [Vietnamese translation](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10/blob/master/translate/README_Vietnamese.md) (thanks @winter2897!)
 
 I also made a YouTube video that walks through this tutorial. Any discrepancies between the video and this written tutorial are due to updates required for using newer versions of TensorFlow. 
 
