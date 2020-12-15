@@ -239,7 +239,7 @@ This creates a train_labels.csv and test_labels.csv file in the \object_detectio
 Next, open the generate_tfrecord.py file in a text editor. Replace the label map starting at line 31 with your own label map, where each object is assigned an ID number. This same number assignment will be used when configuring the labelmap.pbtxt file in Step 5b. 
 
 For example, say you are training a classifier to detect basketballs, shirts, and shoes. You will replace the following code in generate_tfrecord.py:
-```
+```python
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
     if row_label == 'nine':
@@ -258,7 +258,7 @@ def class_text_to_int(row_label):
         None
 ```
 With this:
-```
+```python
 # TO-DO replace this with label map
 def class_text_to_int(row_label):
     if row_label == 'basketball':
@@ -339,7 +339,7 @@ Navigate to C:\tensorflow1\models\research\object_detection\samples\configs and 
 Make the following changes to the faster_rcnn_inception_v2_pets.config file. Note: The paths must be entered with single forward slashes (NOT backslashes), or TensorFlow will give a file path error when trying to train the model! Also, the paths must be in double quotation marks ( " ), not single quotation marks ( ' ).
 
 - Line 9. Change num_classes to the number of different objects you want the classifier to detect. For the above basketball, shirt, and shoe detector, it would be num_classes : 3 .
-- Line 106. Change fine_tune_checkpoint to:
+- Line 110. Change fine_tune_checkpoint to:
   - fine_tune_checkpoint : "C:/tensorflow1/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
 
 - Lines 123 and 125. In the train_input_reader section, change input_path and label_map_path to:
@@ -348,7 +348,7 @@ Make the following changes to the faster_rcnn_inception_v2_pets.config file. Not
 
 - Line 130. Change num_examples to the number of images you have in the \images\test directory.
 
-- Lines 135 and 137. In the eval_input_reader section, change input_path and label_map_path to:
+- Lines 140 and 142. In the eval_input_reader section, change input_path and label_map_path to:
   - input_path : "C:/tensorflow1/models/research/object_detection/test.record"
   - label_map_path: "C:/tensorflow1/models/research/object_detection/training/labelmap.pbtxt"
 
