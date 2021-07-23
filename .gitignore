@@ -1,0 +1,13 @@
+# Sphinx documentation
+/docs/build/
+/docs/examples/data/
+/docs/source/auto_examples/
+!/docs/source/auto_examples/*.ipynb
+!/docs/source/auto_examples/*.py.md5
+!/docs/source/auto_examples/*.rst
+!/docs/source/auto_examples/images
+
+# Editors
+.vscode/
+.idea/
+
