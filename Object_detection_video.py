@@ -90,7 +90,14 @@ num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 # Open video file
 video = cv2.VideoCapture(PATH_TO_VIDEO)
 
+#additional_code
+start_time = time.time()
+flag=0
+
 while(video.isOpened()):
+
+    start = time.time()
+    flag = flag + 1
 
     # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
     # i.e. a single-column array, where each item in the column has the pixel RGB value
@@ -113,6 +120,11 @@ while(video.isOpened()):
         use_normalized_coordinates=True,
         line_thickness=8,
         min_score_thresh=0.60)
+    
+    #Shows the fps in the terminal
+    cv2.imshow('Object detector', frame)
+    fps1 = 1/(time.time() - start)
+    print("fps: ",fps1)
 
     # All the results have been drawn on the frame, so it's time to display it.
     cv2.imshow('Object detector', frame)
@@ -120,6 +132,11 @@ while(video.isOpened()):
     # Press 'q' to quit
     if cv2.waitKey(1) == ord('q'):
         break
+
+#Average fps
+end_time = time.time()
+fps = flag/(end_time - start_time)
+print("Average FPS: ",fps)
 
 # Clean up
 video.release()
