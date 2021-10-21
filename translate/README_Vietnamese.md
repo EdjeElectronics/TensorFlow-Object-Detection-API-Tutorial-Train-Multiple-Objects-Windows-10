@@ -1,4 +1,4 @@
-# Cách đào tạo một Object Detection Classifier cho Multiple Objects sử dụng TensorFlow (GPU) trên Window 10
+# Cách huấn luyện một mô hình Object Detection Classifier cho nhiều đối tượng sử dụng TensorFlow (GPU) trên Window 10
 
 ## Tóm lược
 *Lần cập nhật gần nhất: 6/22/2019 với TensorFlow phiên bản 1.13.1*
